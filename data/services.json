@@ -1,0 +1,104 @@
+{
+  "services": [
+    {
+      "id": "office-cleaning",
+      "title": "Office Cleaning",
+      "description": "Professional office cleaning services to maintain a clean and healthy work environment. Our comprehensive cleaning solutions ensure your office space remains spotless and welcoming for employees and clients alike.",
+      "shortDescription": "Keep your workplace clean and professional with our comprehensive office cleaning services.",
+      "benefits": [
+        {
+          "title": "Professional Service",
+          "description": "Trained and experienced staff dedicated to maintaining high cleaning standards."
+        },
+        {
+          "title": "Flexible Scheduling",
+          "description": "Customizable cleaning schedules to minimize disruption to your business operations."
+        }
+      ],
+      "qualityDescription": "Our office cleaning service is designed to maintain the highest standards of cleanliness and hygiene in your workplace. We use eco-friendly products and advanced cleaning techniques to ensure a healthy environment for your employees and visitors.",
+      "image": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&auto=format&fit=crop&q=60",
+      "beforeImage": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop&q=60",
+      "afterImage": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop&q=60"
+    },
+    {
+      "id": "deep-cleaning",
+      "title": "Deep Cleaning",
+      "description": "Thorough deep cleaning services that go beyond regular cleaning to eliminate dirt, dust, and allergens from every corner of your space. Perfect for spring cleaning or preparing for special occasions.",
+      "shortDescription": "Comprehensive deep cleaning that reaches every corner of your space.",
+      "benefits": [
+        {
+          "title": "Thorough Cleaning",
+          "description": "Detailed cleaning of all surfaces, including hard-to-reach areas."
+        },
+        {
+          "title": "Allergen Removal",
+          "description": "Special attention to removing dust, allergens, and pollutants."
+        }
+      ],
+      "qualityDescription": "Our deep cleaning service provides an intensive cleaning solution that addresses accumulated dirt and grime. We pay special attention to areas often missed during regular cleaning.",
+      "image": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&auto=format&fit=crop&q=60",
+      "beforeImage": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&auto=format&fit=crop&q=60",
+      "afterImage": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&auto=format&fit=crop&q=60"
+    },
+    {
+      "id": "regular-house-cleaning",
+      "title": "Regular House Cleaning",
+      "description": "Reliable and consistent house cleaning services to maintain your home's cleanliness. Our regular cleaning plans keep your living space fresh and comfortable.",
+      "shortDescription": "Consistent and reliable cleaning services for your home.",
+      "benefits": [
+        {
+          "title": "Consistent Quality",
+          "description": "Regular cleaning schedule with consistent high-quality service."
+        },
+        {
+          "title": "Customized Plans",
+          "description": "Tailored cleaning plans to meet your specific needs and preferences."
+        }
+      ],
+      "qualityDescription": "Our regular house cleaning service ensures your home stays clean and comfortable. We provide consistent, high-quality cleaning with attention to detail.",
+      "image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60",
+      "beforeImage": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60",
+      "afterImage": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60"
+    },
+    {
+      "id": "event-cleaning",
+      "title": "Event Cleaning",
+      "description": "Professional cleaning services for before, during, and after events. We ensure your venue is spotless and ready for your guests.",
+      "shortDescription": "Comprehensive cleaning services for events of all sizes.",
+      "benefits": [
+        {
+          "title": "Pre-Event Preparation",
+          "description": "Thorough cleaning before your event to ensure a perfect presentation."
+        },
+        {
+          "title": "Post-Event Cleanup",
+          "description": "Efficient cleanup after your event to restore the venue."
+        }
+      ],
+      "qualityDescription": "Our event cleaning service provides comprehensive cleaning solutions for all stages of your event. We ensure your venue looks its best for your guests.",
+      "image": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&auto=format&fit=crop&q=60",
+      "beforeImage": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&auto=format&fit=crop&q=60",
+      "afterImage": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&auto=format&fit=crop&q=60"
+    },
+    {
+      "id": "retail-space-cleaning",
+      "title": "Retail Space Cleaning",
+      "description": "Specialized cleaning services for retail spaces to maintain a clean and inviting shopping environment. We understand the unique cleaning needs of retail businesses.",
+      "shortDescription": "Professional cleaning services tailored for retail environments.",
+      "benefits": [
+        {
+          "title": "Business Hours Cleaning",
+          "description": "Flexible cleaning schedules that work around your business hours."
+        },
+        {
+          "title": "Customer-Focused",
+          "description": "Cleaning services that enhance the shopping experience."
+        }
+      ],
+      "qualityDescription": "Our retail space cleaning service is designed to maintain a clean and welcoming environment for your customers. We provide thorough cleaning while minimizing disruption to your business.",
+      "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&auto=format&fit=crop&q=60",
+      "beforeImage": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&auto=format&fit=crop&q=60",
+      "afterImage": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&auto=format&fit=crop&q=60"
+    }
+  ]
+} 
