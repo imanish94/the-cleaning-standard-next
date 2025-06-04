@@ -15,9 +15,9 @@ module.exports = {
       },
       colors: {
         PrimaryColor: ["#ffc702"],
-        SecondaryColor: ["#008000"],
-        HoverColor: ["rgb(46 109 254)"],
-        HeadingColor: ["#215607"],
+        SecondaryColor: ["#2e6dfe"],
+        HoverColor: ["#2e6dfe"],
+        HeadingColor: ["#00197e"],
         TextColor: ["#3a4268"],
         BodyBg: ["#f3f4f8"],
         BorderColor: ["#0202021a"],

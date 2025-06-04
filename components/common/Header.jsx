@@ -145,7 +145,7 @@ const Header = () => {
       <Link
         className={`${
           pathname === "/contact" ? "active" : ""
-        } text-HeadingColor-0 text-left lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300`}
+        } text-HeadingColor-0 hover:text-PrimaryColor-0 text-left lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300 whitespace-nowrap`}
         href="/contact"
       >
         Contact
@@ -201,12 +201,7 @@ const Header = () => {
                 </Link>
               </li>
             </ul>
-            <Link
-              href="/account/sign-in"
-              className="text-sm font-medium text-white hover:text-PrimaryColor-0 transition-all duration-500"
-            >
-              Sign In
-            </Link>
+           
           </div>
           <div className="lg:flex items-center gap-2 hidden">
             <h6 className="flex items-center gap-2 text-sm text-white font-Poppins font-light">

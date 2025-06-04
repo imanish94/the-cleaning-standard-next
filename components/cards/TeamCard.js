@@ -4,7 +4,7 @@ import Image from "next/image";
 const TeamCard = ({teamThumb, teamTitle, teamDesc}) => {
   return (
     <div className="group">
-      <div className="relative z-10 overflow-hidden before:absolute before:bottom-0 before:left-0 before:w-full before:h-5/6 before:bg-gradient-to-t before:from-green-500 before:to-transparent before:transition-all before:duration-500 before:opacity-75 group-hover:before:h-0 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0 after:transition-all after:duration-500 after:bg-gradient-to-t after:from-yellow-300 after:to-transparent after:opacity-75 group-hover:after:h-5/6">
+      <div className="relative z-10 overflow-hidden before:absolute before:bottom-0 before:left-0 before:w-full before:h-5/6 before:bg-gradient-to-t before:from-blue-500 before:to-transparent before:transition-all before:duration-500 before:opacity-75 group-hover:before:h-0 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0 after:transition-all after:duration-500 after:bg-gradient-to-t after:from-yellow-300 after:to-transparent after:opacity-75 group-hover:after:h-5/6">
         <Image 
           src={teamThumb} 
           alt={teamTitle}

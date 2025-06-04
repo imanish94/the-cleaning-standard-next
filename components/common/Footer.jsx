@@ -7,6 +7,7 @@ import {
   FaPinterestP,
   FaXTwitter,
 } from "react-icons/fa6";
+import Logo from "@/public/images/logo-cleaning.png";
 import { IoLocationOutline } from "react-icons/io5";
 import { FiPhoneCall } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
@@ -74,7 +75,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-12">
           <div className="2xl:col-span-4">
             <Image 
-              src="/images/footer-logo.png"
+              src={Logo}
               alt="Footer Logo"
               width={180}
               height={60}
@@ -201,7 +202,7 @@ const Footer = () => {
         <div className="text-left sm:text-center py-6 border-t border-[#ffc702] mt-24">
           <p className="font-Poppins text-white">
             © Copyrights 2024 The Clening Standard All rights reserved by
-            <span className="text-PrimaryColor-0">The Cleaning Standard</span>
+            <span className="text-PrimaryColor-0"> The Cleaning Standard</span>
           </p>
         </div>
       </div>

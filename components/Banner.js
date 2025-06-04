@@ -5,7 +5,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 const Banner = () => {
   return (
     <div>
-    <section className="bg-[url('/images/banner-bubbles.jpg')] bg-cover bg-center bg-no-repeat h-[1000px] sm:h-[88rem] lg:h-[800px] flex items-center overflow-hidden relative before:absolute before:inset-0 before:bg-gradient-to-r before:from-black/70 before:to-black/50 before:z-0">
+    <section className="bg-[url('/images/blue-banner-bubbles.jpg')] bg-cover bg-center bg-no-repeat h-[1000px] sm:h-[88rem] lg:h-[800px] flex items-center overflow-hidden relative before:absolute before:inset-0 before:bg-gradient-to-r before:from-black/70 before:to-black/50 before:z-0">
       <div className="Container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center justify-between">
           <div className="relative">
