@@ -13,7 +13,7 @@ import {
   FaXTwitter,
 } from "react-icons/fa6";
 import { BiChevronDown } from "react-icons/bi";
-import Logo from "@/public/images/logo-cleaning.png";
+import Logo from "@/public/images/logo-cleaning-demo.png";
 import { useState, useEffect } from "react";
 import { IoMdCall, IoMdClose } from "react-icons/io";
 import { BsEnvelope } from "react-icons/bs";
@@ -88,8 +88,8 @@ const Header = () => {
           <ul className="shadow-lg hidden group-hover:block rounded-sm text-white w-[220px] text-left transition-all duration-500 text-sm py-4 bg-HeadingColor-0">
             <div className="px-5 group hover:bg-SecondaryColor-0">
               <li className="hover:ml-3 duration-300">
-                <Link href="/service-details/office-cleaning" className="py-2 block">
-                  Office Cleaning
+                <Link href="/service-details/house-cleaning" className="py-2 block">
+                  House Cleaning
                 </Link>
               </li>
             </div>
@@ -102,15 +102,15 @@ const Header = () => {
             </div>
             <div className="px-5 group hover:bg-SecondaryColor-0">
               <li className="hover:ml-3 duration-300">
-                <Link href="/service-details/regular-house-cleaning" className="py-2 block">
-                  Regular House Cleaning
+                <Link href="/service-details/airbnb-cleaning" className="py-2 block">
+                  Airbnb Cleaning
                 </Link>
               </li>
             </div>
             <div className="px-5 group hover:bg-SecondaryColor-0">
               <li className="hover:ml-3 duration-300">
-                <Link href="/service-details/event-cleaning" className="py-2 block">
-                  Event Cleaning
+                <Link href="/service-details/office-cleaning" className="py-2 block">
+                  Office Cleaning
                 </Link>
               </li>
             </div>
@@ -118,6 +118,13 @@ const Header = () => {
               <li className="hover:ml-3 duration-300">
                 <Link href="/service-details/retail-space-cleaning" className="py-2 block">
                   Retail Space Cleaning
+                </Link>
+              </li>
+            </div>
+            <div className="px-5 group hover:bg-SecondaryColor-0">
+              <li className="hover:ml-3 duration-300">
+                <Link href="/service-details/event-cleaning" className="py-2 block">
+                  Event Cleaning
                 </Link>
               </li>
             </div>
@@ -155,7 +162,7 @@ const Header = () => {
 
   return (
     <nav
-      className={`w-full transition-all duration-300 bg-transparent relativee text-[#7d7f8c] z-[99999]`}
+      className={`w-full transition-all duration-300 bg-transparent relativee text-[#7d7f8c] z-[9999]`}
     >
       {/* top Navbar */}
       <header className="bg-SecondaryColor-0 overflow-hidden md:block relative z-10">
@@ -228,28 +235,28 @@ const Header = () => {
           {/* main Navbar */}
           <div className="flex flex-col lg:flex-row items-center justify-between lg:h-[100px] bg-white">
             {/* website Logo */}
-            <div className="w-48">
+            <div>
               <Link href="/">
                 <Image
                   src={Logo}
-                  className="hidden lg:block w-full"
+                  className="hidden lg:block w-full h-auto object-contain"
                   alt="website_logo"
-                  width={192}
-                  height={48}
+                  width={270}
+                  height={70}
                   priority
                 />
               </Link>
             </div>
             {/* small screen size */}
             <div className="px-3 w-full lg:hidden flex justify-between bg-khaki h-[70px] items-center p-3">
-              <div className="w-28">
+              <div className="w-32">
                 <Link href="/">
                   <Image
                     src={Logo}
-                    className="block lg:hidden"
+                    className="block lg:hidden w-full h-auto object-contain"
                     alt="constre_website_logo"
-                    width={112}
-                    height={28}
+                    width={300}
+                    height={70}
                     priority
                   />
                 </Link>

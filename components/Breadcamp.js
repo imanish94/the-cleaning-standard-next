@@ -17,15 +17,15 @@ const Breadcamp = ({
         <Image
           src="/images/breatcome-shape.png"
           alt="Breadcamp shape"
-          width={200}
-          height={200}
+          width={50}
+          height={50}
           className="absolute -top-24 right-24 animate-zoomInOut hidden md:block"
         />
         <Image
           src="/images/breatcome-shape.png"
           alt="Breadcamp shape"
-          width={200}
-          height={200}
+          width={50}
+          height={50}
           className="absolute -bottom-24 left-0 animate-dance2 hidden md:block"
         />
         <h1 className="font-Inter font-bold text-4xl sm:text-[46px] text-white capitalize">

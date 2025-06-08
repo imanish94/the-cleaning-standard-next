@@ -1,24 +1,24 @@
 {
   "services": [
     {
-      "id": "office-cleaning",
-      "title": "Office Cleaning",
-      "description": "Professional office cleaning services to maintain a clean and healthy work environment. Our comprehensive cleaning solutions ensure your office space remains spotless and welcoming for employees and clients alike.",
-      "shortDescription": "Keep your workplace clean and professional with our comprehensive office cleaning services.",
+      "id": "house-cleaning",
+      "title": "House Cleaning",
+      "description": "Reliable and consistent house cleaning services to maintain your home's cleanliness. Our regular cleaning plans keep your living space fresh and comfortable.",
+      "shortDescription": "Consistent and reliable cleaning services for your home.",
       "benefits": [
         {
-          "title": "Professional Service",
-          "description": "Trained and experienced staff dedicated to maintaining high cleaning standards."
+          "title": "Consistent Quality",
+          "description": "Regular cleaning schedule with consistent high-quality service."
         },
         {
-          "title": "Flexible Scheduling",
-          "description": "Customizable cleaning schedules to minimize disruption to your business operations."
+          "title": "Customized Plans",
+          "description": "Tailored cleaning plans to meet your specific needs and preferences."
         }
       ],
-      "qualityDescription": "Our office cleaning service is designed to maintain the highest standards of cleanliness and hygiene in your workplace. We use eco-friendly products and advanced cleaning techniques to ensure a healthy environment for your employees and visitors.",
-      "image": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&auto=format&fit=crop&q=60",
-      "beforeImage": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop&q=60",
-      "afterImage": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop&q=60"
+      "qualityDescription": "Our house cleaning service ensures your home stays clean and comfortable. We provide consistent, high-quality cleaning with attention to detail.",
+      "image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60",
+      "beforeImage": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60",
+      "afterImage": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60"
     },
     {
       "id": "deep-cleaning",
@@ -41,44 +41,44 @@
       "afterImage": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&auto=format&fit=crop&q=60"
     },
     {
-      "id": "regular-house-cleaning",
-      "title": "Regular House Cleaning",
-      "description": "Reliable and consistent house cleaning services to maintain your home's cleanliness. Our regular cleaning plans keep your living space fresh and comfortable.",
-      "shortDescription": "Consistent and reliable cleaning services for your home.",
+      "id": "airbnb-cleaning",
+      "title": "Airbnb Cleaning",
+      "description": "Professional cleaning services specifically designed for Airbnb properties. We ensure your rental space is spotless and ready for your next guests.",
+      "shortDescription": "Specialized cleaning services for Airbnb properties.",
       "benefits": [
         {
-          "title": "Consistent Quality",
-          "description": "Regular cleaning schedule with consistent high-quality service."
+          "title": "Guest-Ready",
+          "description": "Thorough cleaning to ensure your property is ready for new guests."
         },
         {
-          "title": "Customized Plans",
-          "description": "Tailored cleaning plans to meet your specific needs and preferences."
+          "title": "Flexible Scheduling",
+          "description": "Cleaning services that work around your guest check-in/check-out times."
         }
       ],
-      "qualityDescription": "Our regular house cleaning service ensures your home stays clean and comfortable. We provide consistent, high-quality cleaning with attention to detail.",
+      "qualityDescription": "Our Airbnb cleaning service is tailored to meet the specific needs of short-term rental properties. We ensure your space is immaculate for each new guest.",
       "image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60",
       "beforeImage": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60",
       "afterImage": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60"
     },
     {
-      "id": "event-cleaning",
-      "title": "Event Cleaning",
-      "description": "Professional cleaning services for before, during, and after events. We ensure your venue is spotless and ready for your guests.",
-      "shortDescription": "Comprehensive cleaning services for events of all sizes.",
+      "id": "office-cleaning",
+      "title": "Office Cleaning",
+      "description": "Professional office cleaning services to maintain a clean and healthy work environment. Our comprehensive cleaning solutions ensure your office space remains spotless and welcoming for employees and clients alike.",
+      "shortDescription": "Keep your workplace clean and professional with our comprehensive office cleaning services.",
       "benefits": [
         {
-          "title": "Pre-Event Preparation",
-          "description": "Thorough cleaning before your event to ensure a perfect presentation."
+          "title": "Professional Service",
+          "description": "Trained and experienced staff dedicated to maintaining high cleaning standards."
         },
         {
-          "title": "Post-Event Cleanup",
-          "description": "Efficient cleanup after your event to restore the venue."
+          "title": "Flexible Scheduling",
+          "description": "Customizable cleaning schedules to minimize disruption to your business operations."
         }
       ],
-      "qualityDescription": "Our event cleaning service provides comprehensive cleaning solutions for all stages of your event. We ensure your venue looks its best for your guests.",
-      "image": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&auto=format&fit=crop&q=60",
-      "beforeImage": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&auto=format&fit=crop&q=60",
-      "afterImage": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&auto=format&fit=crop&q=60"
+      "qualityDescription": "Our office cleaning service is designed to maintain the highest standards of cleanliness and hygiene in your workplace. We use eco-friendly products and advanced cleaning techniques to ensure a healthy environment for your employees and visitors.",
+      "image": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&auto=format&fit=crop&q=60",
+      "beforeImage": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop&q=60",
+      "afterImage": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop&q=60"
     },
     {
       "id": "retail-space-cleaning",
@@ -99,6 +99,26 @@
       "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&auto=format&fit=crop&q=60",
       "beforeImage": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&auto=format&fit=crop&q=60",
       "afterImage": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&auto=format&fit=crop&q=60"
+    },
+    {
+      "id": "event-cleaning",
+      "title": "Event Cleaning",
+      "description": "Professional cleaning services for before, during, and after events. We ensure your venue is spotless and ready for your guests.",
+      "shortDescription": "Comprehensive cleaning services for events of all sizes.",
+      "benefits": [
+        {
+          "title": "Pre-Event Preparation",
+          "description": "Thorough cleaning before your event to ensure a perfect presentation."
+        },
+        {
+          "title": "Post-Event Cleanup",
+          "description": "Efficient cleanup after your event to restore the venue."
+        }
+      ],
+      "qualityDescription": "Our event cleaning service provides comprehensive cleaning solutions for all stages of your event. We ensure your venue looks its best for your guests.",
+      "image": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&auto=format&fit=crop&q=60",
+      "beforeImage": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&auto=format&fit=crop&q=60",
+      "afterImage": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&auto=format&fit=crop&q=60"
     }
   ]
 } 

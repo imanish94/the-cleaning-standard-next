@@ -10,8 +10,8 @@ import FeatureCard from "./cards/FeatureCard";
 const processData = [
   {
     id: 1,
-    featureIcon: officeCleaningIcon,
-    featureTitle: "Office Cleaning",
+    featureIcon: houseCleaningIcon,
+    featureTitle: "House Cleaning",
   },
   {
     id: 2,
@@ -21,17 +21,22 @@ const processData = [
   {
     id: 3,
     featureIcon: houseCleaningIcon,
-    featureTitle: "Regular House Cleaning",
+    featureTitle: "Airbnb Cleaning",
   },
   {
     id: 4,
-    featureIcon: eventCleaningIcon,
-    featureTitle: "Event Cleaning",
+    featureIcon: officeCleaningIcon,
+    featureTitle: "Office Cleaning",
   },
   {
     id: 5,
     featureIcon: retailCleaningIcon,
     featureTitle: "Retail Space Cleaning",
+  },
+  {
+    id: 6,
+    featureIcon: eventCleaningIcon,
+    featureTitle: "Event Cleaning",
   },
 ];
 

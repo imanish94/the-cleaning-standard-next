@@ -13,16 +13,31 @@ import { BsFileEarmarkPdf } from "react-icons/bs";
 import ServiceFaq from "../../components/ServiceFAQ";
 import servicesData from '../../data/services.json';
 import { useState, useEffect } from 'react';
+import { useService } from '../../context/ServiceContext';
 
 const ServiceDetails = ({ service }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const { selectService } = useService();
+
+  // Map the service ID to match the booking form service IDs
+  const serviceIdMap = {
+    'house-cleaning': 'regular',
+    'deep-cleaning': 'deep',
+    'airbnb-cleaning': 'airbnb',
+    'office-cleaning': 'office',
+    'retail-space-cleaning': 'retail',
+    'event-cleaning': 'event'
+  };
 
   useEffect(() => {
     if (service) {
       setIsLoading(false);
+      // Set the selected service in context using the mapped service ID
+      const mappedServiceId = serviceIdMap[service.id];
+      selectService(mappedServiceId);
     }
-  }, [service]);
+  }, [service, selectService]);
 
   // Show loading state while the page is being generated
   if (router.isFallback || isLoading) {
@@ -162,7 +177,10 @@ const ServiceDetails = ({ service }) => {
         />
       </div>
       <Link href="/book-appointment">
-        <button className="w-full sm:w-auto mt-8 font-Inter text-white flex items-center justify-center gap-2 bg-SecondaryColor-0 px-8 py-4 rounded-md hover:bg-HoverColor-0 transition-all duration-500">
+        <button 
+          onClick={handleBookNow}
+          className="w-full sm:w-auto mt-8 font-Inter text-white flex items-center justify-center gap-2 bg-SecondaryColor-0 px-8 py-4 rounded-md hover:bg-HoverColor-0 transition-all duration-500"
+        >
           Book Appointment
           <FaArrowRight />
         </button>
@@ -210,6 +228,27 @@ const ServiceDetails = ({ service }) => {
       <ServiceFaq />
     </div>
   );
+
+  const handleBookNow = () => {
+    // Map the service ID to match the booking form service IDs
+    const serviceIdMap = {
+      'house-cleaning': 'regular',
+      'deep-cleaning': 'deep',
+      'airbnb-cleaning': 'airbnb',
+      'office-cleaning': 'office',
+      'retail-space-cleaning': 'retail',
+      'event-cleaning': 'event'
+    };
+
+    // Get the mapped service ID
+    const mappedServiceId = serviceIdMap[service.id];
+    
+    // Set the selected service in context
+    selectService(mappedServiceId);
+    
+    // Navigate to booking page
+    router.push('/book-appointment');
+  };
 
   return (
     <>

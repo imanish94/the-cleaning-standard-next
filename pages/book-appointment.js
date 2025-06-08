@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -22,10 +22,18 @@ import {
   FaUser
 } from "react-icons/fa";
 import Breadcamp from "../components/Breadcamp";
+import HouseCleaning from '../components/services/HouseCleaning';
+import DeepCleaning from '../components/services/DeepCleaning';
+import OfficeCleaning from '../components/services/OfficeCleaning';
+import RetailCleaning from '../components/services/RetailCleaning';
+import EventCleaning from '../components/services/EventCleaning';
+import AirbnbCleaning from '../components/services/AirbnbCleaning';
+import { useService } from '../context/ServiceContext';
 
 const BookCleaning = () => {
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
+  const { selectedService } = useService();
   const [formData, setFormData] = useState({
     postcode: '',
     service: '',
@@ -45,13 +53,23 @@ const BookCleaning = () => {
     address: ''
   });
 
+  // Update formData when selectedService changes
+  useEffect(() => {
+    if (selectedService) {
+      setFormData(prev => ({
+        ...prev,
+        service: selectedService
+      }));
+    }
+  }, [selectedService]);
+
   const services = [
     { 
-      id: 'office', 
-      name: 'Office Cleaning', 
-      price: 20,
-      icon: FaBuilding,
-      description: 'Professional cleaning for your workspace'
+      id: 'regular', 
+      name: 'House Cleaning', 
+      price: 18,
+      icon: FaHome,
+      description: 'Standard residential cleaning service'
     },
     { 
       id: 'deep', 
@@ -60,19 +78,19 @@ const BookCleaning = () => {
       icon: FaBroom,
       description: 'Thorough cleaning of all areas'
     },
-    { 
-      id: 'regular', 
-      name: 'Regular House Cleaning', 
-      price: 18,
+    {
+      id: 'airbnb',
+      name: 'Airbnb Cleaning',
+      price: 28,
       icon: FaHome,
-      description: 'Standard residential cleaning service'
+      description: 'Professional cleaning for Airbnb properties'
     },
     { 
-      id: 'event', 
-      name: 'Event Cleaning', 
-      price: 30,
-      icon: FaGlassCheers,
-      description: 'Pre and post-event cleaning services'
+      id: 'office', 
+      name: 'Office Cleaning', 
+      price: 20,
+      icon: FaBuilding,
+      description: 'Professional cleaning for your workspace'
     },
     { 
       id: 'retail', 
@@ -80,6 +98,13 @@ const BookCleaning = () => {
       price: 22,
       icon: FaStore,
       description: 'Specialized cleaning for retail spaces'
+    },
+    { 
+      id: 'event', 
+      name: 'Event Cleaning', 
+      price: 30,
+      icon: FaGlassCheers,
+      description: 'Pre and post-event cleaning services'
     }
   ];
 
@@ -140,9 +165,69 @@ const BookCleaning = () => {
         break;
       
       case 4:
-        const hasRooms = Object.values(formData.propertySize).some(value => value > 0);
-        if (!hasRooms) {
-          newErrors.propertySize = 'Please select at least one room';
+        switch (formData.service) {
+          case 'regular':
+            if (!formData.propertySize.bedrooms && !formData.propertySize.bathrooms) {
+              newErrors.propertySize = 'Please select at least one room';
+            }
+            break;
+          case 'deep':
+            if (!formData.focusAreas || formData.focusAreas.length === 0) {
+              newErrors.propertySize = 'Please select at least one area to focus on';
+            }
+            if (!formData.clutterLevel) {
+              newErrors.propertySize = 'Please select clutter level';
+            }
+            break;
+          case 'office':
+            if (!formData.squareFootage) {
+              newErrors.propertySize = 'Please enter square footage';
+            }
+            if (!formData.workstations) {
+              newErrors.propertySize = 'Please enter number of workstations';
+            }
+            if (!formData.frequency) {
+              newErrors.propertySize = 'Please select cleaning frequency';
+            }
+            break;
+          case 'retail':
+            if (!formData.squareFootage) {
+              newErrors.propertySize = 'Please enter store size';
+            }
+            if (!formData.retailType) {
+              newErrors.propertySize = 'Please select retail type';
+            }
+            if (!formData.floorType) {
+              newErrors.propertySize = 'Please select floor type';
+            }
+            if (!formData.frequency) {
+              newErrors.propertySize = 'Please select cleaning frequency';
+            }
+            break;
+          case 'event':
+            if (!formData.eventType) {
+              newErrors.propertySize = 'Please select event type';
+            }
+            if (!formData.squareFootage) {
+              newErrors.propertySize = 'Please enter venue size';
+            }
+            if (!formData.guestCount) {
+              newErrors.propertySize = 'Please enter guest count';
+            }
+            if (!formData.cleaningType) {
+              newErrors.propertySize = 'Please select cleaning type';
+            }
+            break;
+          case 'airbnb':
+            if (!formData.bedrooms && !formData.bathrooms) {
+              newErrors.propertySize = 'Please enter number of bedrooms or bathrooms';
+            }
+            if (!formData.checkInTime || !formData.checkOutTime) {
+              newErrors.propertySize = 'Please enter check-in and check-out times';
+            }
+            break;
+          default:
+            newErrors.propertySize = 'Please complete all required fields';
         }
         break;
       
@@ -606,7 +691,7 @@ const BookCleaning = () => {
               <div className="p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <FaHome className="w-6 h-6 text-SecondaryColor-0" />
-                  <h2 className="text-2xl font-bold text-gray-800">Property Size</h2>
+                  <h2 className="text-2xl font-bold text-gray-800">Service Details</h2>
                 </div>
                 {errors.propertySize && (
                   <div className="flex items-center gap-2 mb-4 text-red-500 text-sm">
@@ -614,64 +699,27 @@ const BookCleaning = () => {
                     <span>{errors.propertySize}</span>
                   </div>
                 )}
-                <div className="grid gap-6">
-                  {Object.entries(formData.propertySize).map(([area, value]) => (
-                    <div key={area} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                      <span className="capitalize font-medium text-gray-700">
-                        {area.replace(/([A-Z])/g, ' $1').trim()}
-                      </span>
-                      <div className="flex items-center space-x-4">
-                        <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          onClick={() => handlePropertySizeChange(area, Math.max(0, value - 1))}
-                          className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center text-gray-600 hover:bg-gray-100"
-                        >
-                          <FaMinus className="w-4 h-4" />
-                        </motion.button>
-                        <span className="w-12 text-center font-semibold text-gray-800">{value}</span>
-                        <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          onClick={() => handlePropertySizeChange(area, value + 1)}
-                          className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center text-gray-600 hover:bg-gray-100"
-                        >
-                          <FaPlus className="w-4 h-4" />
-                        </motion.button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-8">
-                  <h3 className="font-semibold mb-4 text-gray-800 flex items-center gap-2">
-                    <FaPlus className="w-4 h-4 text-SecondaryColor-0" />
-                    Optional Add-ons
-                  </h3>
-                  <div className="grid gap-3">
-                    {addons.map((addon) => {
-                      const Icon = addonIcons[addon.id];
-                      return (
-                        <motion.label
-                          key={addon.id}
-                          whileHover={{ scale: 1.02 }}
-                          className="flex items-center p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
-                        >
-                          <input
-                            type="checkbox"
-                            checked={formData.addons.includes(addon.id)}
-                            onChange={() => handleAddonToggle(addon.id)}
-                            className="w-5 h-5 text-SecondaryColor-0 rounded border-gray-300 focus:ring-SecondaryColor-0"
-                          />
-                          <div className="flex items-center gap-3 ml-3">
-                            <Icon className="w-5 h-5 text-SecondaryColor-0" />
-                            <span className="text-gray-700">{addon.name}</span>
-                          </div>
-                          <span className="ml-auto text-SecondaryColor-0 font-medium">+£{addon.price}</span>
-                        </motion.label>
-                      );
-                    })}
-                  </div>
-                </div>
+                
+                {/* Service-specific form */}
+                {formData.service === 'regular' && (
+                  <HouseCleaning formData={formData} setFormData={setFormData} errors={errors} />
+                )}
+                {formData.service === 'deep' && (
+                  <DeepCleaning formData={formData} setFormData={setFormData} errors={errors} />
+                )}
+                {formData.service === 'office' && (
+                  <OfficeCleaning formData={formData} setFormData={setFormData} errors={errors} />
+                )}
+                {formData.service === 'retail' && (
+                  <RetailCleaning formData={formData} setFormData={setFormData} errors={errors} />
+                )}
+                {formData.service === 'event' && (
+                  <EventCleaning formData={formData} setFormData={setFormData} errors={errors} />
+                )}
+                {formData.service === 'airbnb' && (
+                  <AirbnbCleaning formData={formData} setFormData={setFormData} errors={errors} />
+                )}
+
                 <div className="flex justify-between mt-8">
                   <motion.button
                     whileHover={{ scale: 1.02 }}

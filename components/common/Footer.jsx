@@ -7,7 +7,7 @@ import {
   FaPinterestP,
   FaXTwitter,
 } from "react-icons/fa6";
-import Logo from "@/public/images/logo-cleaning.png";
+import Logo from "@/public/images/footer-logo-ob-yellow.png";
 import { IoLocationOutline } from "react-icons/io5";
 import { FiPhoneCall } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
@@ -77,8 +77,8 @@ const Footer = () => {
             <Image 
               src={Logo}
               alt="Footer Logo"
-              width={180}
-              height={60}
+              width={320}
+              height={180}
             />
             <p className="font-Poppins text-white mt-7 mb-9">
               Competently repurpose forward conveniently target e-business

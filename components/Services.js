@@ -11,9 +11,9 @@ import retailCleaningIcon from "@/public/images/hand-shake.png";
 const serviceData = [
   {
     id: 1,
-    serviceIcon: officeCleaningIcon,
-    serviceTitle: `Office Cleaning`,
-    serviceUrl: "/service-details/office-cleaning",
+    serviceIcon: houseCleaningIcon,
+    serviceTitle: `House Cleaning`,
+    serviceUrl: "/service-details/house-cleaning",
     serviceBtn: `Read More`,
     serviceBtnIcon: <FaArrowRightLong />,
     serviceNumber: "01",
@@ -30,17 +30,17 @@ const serviceData = [
   {
     id: 3,
     serviceIcon: houseCleaningIcon,
-    serviceTitle: `Regular House Cleaning`,
-    serviceUrl: "/service-details/regular-house-cleaning",
+    serviceTitle: `Airbnb Cleaning`,
+    serviceUrl: "/service-details/airbnb-cleaning",
     serviceBtn: `Read More`,
     serviceBtnIcon: <FaArrowRightLong />,
     serviceNumber: "03",
   },
   {
     id: 4,
-    serviceIcon: eventCleaningIcon,
-    serviceTitle: `Event Cleaning`,
-    serviceUrl: "/service-details/event-cleaning",
+    serviceIcon: officeCleaningIcon,
+    serviceTitle: `Office Cleaning`,
+    serviceUrl: "/service-details/office-cleaning",
     serviceBtn: `Read More`,
     serviceBtnIcon: <FaArrowRightLong />,
     serviceNumber: "04",
@@ -53,6 +53,15 @@ const serviceData = [
     serviceBtn: `Read More`,
     serviceBtnIcon: <FaArrowRightLong />,
     serviceNumber: "05",
+  },
+  {
+    id: 6,
+    serviceIcon: eventCleaningIcon,
+    serviceTitle: `Event Cleaning`,
+    serviceUrl: "/service-details/event-cleaning",
+    serviceBtn: `Read More`,
+    serviceBtnIcon: <FaArrowRightLong />,
+    serviceNumber: "06",
   },
 ];
 
