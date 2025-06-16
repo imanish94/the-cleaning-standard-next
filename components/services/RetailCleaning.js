@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaStore, FaWindowMaximize, FaUsers, FaTrash, FaExclamationTriangle } from "react-icons/fa";
+import { FaStore, FaUsers, FaExclamationTriangle, FaExclamationCircle } from "react-icons/fa";
 
 const RetailCleaning = ({ formData, setFormData, errors }) => {
   const retailTypes = [
@@ -27,39 +27,68 @@ const RetailCleaning = ({ formData, setFormData, errors }) => {
   const handleRetailTypeChange = (type) => {
     setFormData({
       ...formData,
-      retailType: type
+      propertySize: {
+        ...formData.propertySize,
+        retailType: type
+      }
     });
   };
 
   const handleFloorTypeChange = (type) => {
     setFormData({
       ...formData,
-      floorType: type
+      propertySize: {
+        ...formData.propertySize,
+        floorType: type
+      }
     });
   };
 
   const handleFrequencyChange = (frequency) => {
     setFormData({
       ...formData,
-      frequency: frequency
+      propertySize: {
+        ...formData.propertySize,
+        frequency: frequency
+      }
+    });
+  };
+
+  const handlePropertySizeChange = (e) => {
+    const value = e.target.value;
+    setFormData({
+      ...formData,
+      propertySize: {
+        ...formData.propertySize,
+        propertySize: value
+      }
     });
   };
 
   return (
     <div className="space-y-6">
-      {/* Store Size */}
+      {/* Property Size */}
       <div className="p-4 bg-gray-50 rounded-lg">
-        <div className="flex items-center gap-3 mb-4">
-          <FaStore className="w-5 h-5 text-SecondaryColor-0" />
-          <h3 className="font-semibold text-gray-800">Store Size (Square Footage)</h3>
+        <h3 className="font-semibold mb-4 text-gray-800">Store Size (sq ft) <span className="text-red-500">*</span></h3>
+        <div className="relative">
+          <input
+            type="number"
+            value={formData.propertySize?.propertySize || ''}
+            onChange={handlePropertySizeChange}
+            className={`w-full p-4 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent ${
+              errors.propertySize ? 'border-red-500' : 'border-gray-200'
+            }`}
+            placeholder="Enter store size in square feet"
+            min="0"
+          />
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">sq ft</span>
         </div>
-        <input
-          type="number"
-          value={formData.squareFootage || ''}
-          onChange={(e) => setFormData({ ...formData, squareFootage: e.target.value })}
-          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent border-gray-200"
-          placeholder="Enter store size in square feet"
-        />
+        {errors.propertySize && (
+          <div className="flex items-center gap-2 mt-2 text-red-500 text-sm">
+            <FaExclamationCircle />
+            <span>{errors.propertySize}</span>
+          </div>
+        )}
       </div>
 
       {/* Retail Type */}
@@ -73,7 +102,7 @@ const RetailCleaning = ({ formData, setFormData, errors }) => {
               whileTap={{ scale: 0.98 }}
               onClick={() => handleRetailTypeChange(type.id)}
               className={`p-4 rounded-lg text-center transition-colors ${
-                formData.retailType === type.id
+                formData.propertySize?.retailType === type.id
                   ? 'bg-SecondaryColor-0 text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-50'
               }`}
@@ -91,40 +120,18 @@ const RetailCleaning = ({ formData, setFormData, errors }) => {
           <h3 className="font-semibold text-gray-800">High Traffic Areas</h3>
         </div>
         <textarea
-          value={formData.highTrafficAreas || ''}
-          onChange={(e) => setFormData({ ...formData, highTrafficAreas: e.target.value })}
+          value={formData.propertySize?.highTrafficAreas || ''}
+          onChange={(e) => setFormData({
+            ...formData,
+            propertySize: {
+              ...formData.propertySize,
+              highTrafficAreas: e.target.value
+            }
+          })}
           className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent border-gray-200"
           placeholder="Describe high traffic areas that need special attention"
           rows="3"
         />
-      </div>
-
-      {/* Glass/Window Cleaning */}
-      <div className="p-4 bg-gray-50 rounded-lg">
-        <div className="flex items-center gap-3 mb-4">
-          <FaWindowMaximize className="w-5 h-5 text-SecondaryColor-0" />
-          <h3 className="font-semibold text-gray-800">Glass/Window Cleaning</h3>
-        </div>
-        <div className="space-y-3">
-          <label className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              checked={formData.needsWindowCleaning || false}
-              onChange={(e) => setFormData({ ...formData, needsWindowCleaning: e.target.checked })}
-              className="w-5 h-5 text-SecondaryColor-0 rounded border-gray-300 focus:ring-SecondaryColor-0"
-            />
-            <span className="text-gray-700">Storefront Windows</span>
-          </label>
-          <label className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              checked={formData.needsDisplayCaseCleaning || false}
-              onChange={(e) => setFormData({ ...formData, needsDisplayCaseCleaning: e.target.checked })}
-              className="w-5 h-5 text-SecondaryColor-0 rounded border-gray-300 focus:ring-SecondaryColor-0"
-            />
-            <span className="text-gray-700">Display Cases</span>
-          </label>
-        </div>
       </div>
 
       {/* Floor Type */}
@@ -138,7 +145,7 @@ const RetailCleaning = ({ formData, setFormData, errors }) => {
               whileTap={{ scale: 0.98 }}
               onClick={() => handleFloorTypeChange(type.id)}
               className={`p-4 rounded-lg text-center transition-colors ${
-                formData.floorType === type.id
+                formData.propertySize?.floorType === type.id
                   ? 'bg-SecondaryColor-0 text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-50'
               }`}
@@ -151,7 +158,7 @@ const RetailCleaning = ({ formData, setFormData, errors }) => {
 
       {/* Frequency */}
       <div className="p-4 bg-gray-50 rounded-lg">
-        <h3 className="font-semibold mb-4 text-gray-800">Frequency</h3>
+        <h3 className="font-semibold mb-4 text-gray-800">Frequency <span className="text-red-500">*</span></h3>
         <div className="grid grid-cols-3 gap-3">
           {frequencies.map((frequency) => (
             <motion.button
@@ -160,7 +167,7 @@ const RetailCleaning = ({ formData, setFormData, errors }) => {
               whileTap={{ scale: 0.98 }}
               onClick={() => handleFrequencyChange(frequency.id)}
               className={`p-4 rounded-lg text-center transition-colors ${
-                formData.frequency === frequency.id
+                formData.propertySize?.frequency === frequency.id
                   ? 'bg-SecondaryColor-0 text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-50'
               }`}
@@ -169,34 +176,12 @@ const RetailCleaning = ({ formData, setFormData, errors }) => {
             </motion.button>
           ))}
         </div>
-      </div>
-
-      {/* Trash Removal */}
-      <div className="p-4 bg-gray-50 rounded-lg">
-        <div className="flex items-center gap-3 mb-4">
-          <FaTrash className="w-5 h-5 text-SecondaryColor-0" />
-          <h3 className="font-semibold text-gray-800">Trash Removal</h3>
-        </div>
-        <div className="space-y-3">
-          <label className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              checked={formData.needsTrashRemoval || false}
-              onChange={(e) => setFormData({ ...formData, needsTrashRemoval: e.target.checked })}
-              className="w-5 h-5 text-SecondaryColor-0 rounded border-gray-300 focus:ring-SecondaryColor-0"
-            />
-            <span className="text-gray-700">Regular Trash Removal Required</span>
-          </label>
-          <label className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              checked={formData.needsRecyclingRemoval || false}
-              onChange={(e) => setFormData({ ...formData, needsRecyclingRemoval: e.target.checked })}
-              className="w-5 h-5 text-SecondaryColor-0 rounded border-gray-300 focus:ring-SecondaryColor-0"
-            />
-            <span className="text-gray-700">Recycling Removal Required</span>
-          </label>
-        </div>
+        {errors.frequency && (
+          <div className="flex items-center gap-2 mt-2 text-red-500 text-sm">
+            <FaExclamationCircle />
+            <span>{errors.frequency}</span>
+          </div>
+        )}
       </div>
 
       {/* Special Requirements */}
@@ -206,8 +191,14 @@ const RetailCleaning = ({ formData, setFormData, errors }) => {
           <h3 className="font-semibold text-gray-800">Special Requirements</h3>
         </div>
         <textarea
-          value={formData.specialRequirements || ''}
-          onChange={(e) => setFormData({ ...formData, specialRequirements: e.target.value })}
+          value={formData.propertySize?.specialRequirements || ''}
+          onChange={(e) => setFormData({
+            ...formData,
+            propertySize: {
+              ...formData.propertySize,
+              specialRequirements: e.target.value
+            }
+          })}
           className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent border-gray-200"
           placeholder="Any special requirements or considerations?"
           rows="3"

@@ -4,22 +4,41 @@ import About from '../components/AboutUs';
 import Services from '../components/Services';
 import TeamMember from '../components/TeamMember';
 import Process from '../components/Process';
-export default function Home() {
+import { getServices } from '@/utils/api/common';
+
+export default function Home({ services }) {
   return (
     <>
       {/* Banen Section */}
       <Banner />
       {/* Feature Section */}
-      <Feature/>
+      <Feature services={services}/>
       {/* About Us Section */}
-      <About/>
+      <About services={services}/>
       {/* Services Section */}
-      <Services/>
+      <Services services={services}/>
       {/* Process Section */}
       <Process/>
       {/* Team Section */}
       <TeamMember/>
-   
     </>
   );
+}
+
+export async function getServerSideProps() {
+  try {
+    const servicesData = await getServices();
+
+    return {
+      props: {
+        services: servicesData.data || []
+      }
+    };
+  } catch (error) {
+    return {
+      props: {
+        services: []
+      }
+    };
+  }
 }

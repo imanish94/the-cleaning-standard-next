@@ -1,87 +1,104 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaLock, FaArrowLeft, FaEye, FaEyeSlash } from 'react-icons/fa';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Breadcamp from "../../components/Breadcamp";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { resetPassword } from '@/utils/api/common';
 
 const ResetPassword = () => {
-  const [formData, setFormData] = useState({
-    password: '',
-    confirmPassword: '',
-  });
-  const [errors, setErrors] = useState({});
+  const router = useRouter();
+  const [token, setToken] = useState('');
+  
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [error, setError] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
 
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+  useEffect(() => {
+    // Wait for router to be ready
+    if (router.isReady) {
+      // Get token from URL query parameters
+      const urlToken = router.query.token;
+      console.log('Token from URL:', urlToken); // Debug log
+      
+      if (urlToken) {
+        setToken(urlToken);
+        setError(''); // Clear any previous error
+      } else {
+        setError('Invalid or missing reset token');
+      }
     }
-    
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  }, [router.isReady, router.query]);
+
+  const validatePassword = (password) => {
+    // Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number, and allows special characters
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&#\-_+=()[\]{}|;:,.<>]{8,}$/.test(password);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      // Handle password reset logic here
-      console.log('Password reset submitted:', formData);
-      setIsSuccess(true);
+    setError('');
+    setIsLoading(true);
+
+    // Debug logs
+    console.log('Submitting with token:', token);
+    console.log('Password:', password);
+    console.log('Password confirmation:', passwordConfirmation);
+
+    if (!token) {
+      setError('Invalid or missing reset token');
+      setIsLoading(false);
+      return;
+    }
+
+    if (!password || !passwordConfirmation) {
+      setError('Password and confirmation are required');
+      setIsLoading(false);
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      setError('Password must be at least 8 characters long and contain uppercase, lowercase, numbers, and can include special characters (@$!%*?&#-_+=()[]{}|;:,.<>)');
+      setIsLoading(false);
+      return;
+    }
+
+    if (password !== passwordConfirmation) {
+      setError('Passwords do not match');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      console.log('Calling resetPassword API with:', { token, password, password_confirmation: passwordConfirmation });
+      const response = await resetPassword({
+        token,
+        password,
+        password_confirmation: passwordConfirmation
+      });
+      console.log('API Response:', response);
+
+      if (response.status) {
+        setIsSubmitted(true);
+        // Redirect to sign in after 3 seconds
+        setTimeout(() => {
+          router.push('/account/sign-in');
+        }, 3000);
+      } else {
+        setError(response.message || 'Failed to reset password. Please try again.');
+      }
+    } catch (err) {
+      console.error('Reset password error:', err);
+      setError(err.message || 'Failed to reset password. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
-
-  if (isSuccess) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Breadcamp
-          breadCampTitle="Password Reset"
-          breadCampLink="Home"
-          breadcampIcon={<FaArrowRightLong />}
-          breadcampIcon2={<FaArrowRightLong />}
-          breadCampContent="Password Reset"
-          url="/"
-        />
-        
-        <div className="max-w-md mx-auto px-4 py-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="bg-white rounded-xl shadow-lg p-8 text-center"
-          >
-            <div className="mb-6">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Password Reset Successful</h2>
-              <p className="text-gray-600">Your password has been successfully reset.</p>
-            </div>
-            <Link
-              href="/account/sign-in"
-              className="inline-block bg-SecondaryColor-0 text-white py-2 px-6 rounded-lg hover:bg-SecondaryColor-1 transition-colors duration-300"
-            >
-              Sign In
-            </Link>
-          </motion.div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -102,109 +119,116 @@ const ResetPassword = () => {
           className="bg-white rounded-xl shadow-lg p-8"
         >
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-gray-800 mb-2">Reset Your Password</h1>
-            <p className="text-gray-600">Please enter your new password below</p>
+            <h1 className="text-2xl font-bold text-gray-800 mb-2">Reset Password</h1>
+            <p className="text-gray-600">
+              Enter your new password below
+            </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                New Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaLock className="h-5 w-5 text-gray-400" />
+          {!isSubmitted ? (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  New Password
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <FaLock className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setError('');
+                    }}
+                    className={`w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent ${
+                      error ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="Enter new password"
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <FaEyeSlash className="h-5 w-5 text-gray-400" />
+                    ) : (
+                      <FaEye className="h-5 w-5 text-gray-400" />
+                    )}
+                  </button>
                 </div>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  value={formData.password}
-                  onChange={(e) => {
-                    setFormData({ ...formData, password: e.target.value });
-                    if (errors.password) {
-                      setErrors({ ...errors, password: null });
-                    }
-                  }}
-                  className={`w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent ${
-                    errors.password ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="Enter new password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                >
-                  {showPassword ? (
-                    <FaEyeSlash className="h-5 w-5 text-gray-400" />
-                  ) : (
-                    <FaEye className="h-5 w-5 text-gray-400" />
-                  )}
-                </button>
               </div>
-              {errors.password && (
-                <p className="mt-1 text-sm text-red-500">{errors.password}</p>
-              )}
-            </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Confirm New Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaLock className="h-5 w-5 text-gray-400" />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Confirm New Password
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <FaLock className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type={showPasswordConfirmation ? "text" : "password"}
+                    value={passwordConfirmation}
+                    onChange={(e) => {
+                      setPasswordConfirmation(e.target.value);
+                      setError('');
+                    }}
+                    className={`w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent ${
+                      error ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="Confirm new password"
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
+                  >
+                    {showPasswordConfirmation ? (
+                      <FaEyeSlash className="h-5 w-5 text-gray-400" />
+                    ) : (
+                      <FaEye className="h-5 w-5 text-gray-400" />
+                    )}
+                  </button>
                 </div>
-                <input
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  value={formData.confirmPassword}
-                  onChange={(e) => {
-                    setFormData({ ...formData, confirmPassword: e.target.value });
-                    if (errors.confirmPassword) {
-                      setErrors({ ...errors, confirmPassword: null });
-                    }
-                  }}
-                  className={`w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent ${
-                    errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="Confirm new password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                >
-                  {showConfirmPassword ? (
-                    <FaEyeSlash className="h-5 w-5 text-gray-400" />
-                  ) : (
-                    <FaEye className="h-5 w-5 text-gray-400" />
-                  )}
-                </button>
               </div>
-              {errors.confirmPassword && (
-                <p className="mt-1 text-sm text-red-500">{errors.confirmPassword}</p>
-              )}
-            </div>
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              className="w-full bg-SecondaryColor-0 text-white py-2 px-4 rounded-lg hover:bg-SecondaryColor-1 transition-colors duration-300"
-            >
-              Reset Password
-            </motion.button>
-          </form>
+              {error && (
+                <p className="text-sm text-red-500">{error}</p>
+              )}
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                disabled={isLoading}
+                className="w-full bg-SecondaryColor-0 text-white py-2 px-4 rounded-lg hover:bg-SecondaryColor-1 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? 'Resetting...' : 'Reset Password'}
+              </motion.button>
+            </form>
+          ) : (
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                <FaLock className="w-8 h-8 text-green-500" />
+              </div>
+              <h2 className="text-xl font-semibold text-gray-800">Password Reset Successful</h2>
+              <p className="text-gray-600">
+                Your password has been reset successfully. You will be redirected to the sign in page.
+              </p>
+            </div>
+          )}
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
-              Remember your password?{' '}
-              <Link
-                href="/account/sign-in"
-                className="font-medium text-SecondaryColor-0 hover:text-SecondaryColor-1"
-              >
-                Sign in
-              </Link>
-            </p>
+            <Link
+              href="/account/sign-in"
+              className="inline-flex items-center text-sm font-medium text-SecondaryColor-0 hover:text-SecondaryColor-1"
+            >
+              <FaArrowLeft className="mr-2" />
+              Back to Sign In
+            </Link>
           </div>
         </motion.div>
       </div>

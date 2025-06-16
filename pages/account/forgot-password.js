@@ -4,33 +4,47 @@ import { FaEnvelope, FaArrowLeft } from 'react-icons/fa';
 import Link from 'next/link';
 import Breadcamp from "../../components/Breadcamp";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { forgotPassword } from '@/utils/api/common';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     if (!email) {
       setError('Email is required');
+      setIsLoading(false);
       return;
     }
 
     if (!validateEmail(email)) {
       setError('Please enter a valid email address');
+      setIsLoading(false);
       return;
     }
 
-    // Handle password reset logic here
-    console.log('Password reset requested for:', email);
-    setIsSubmitted(true);
+    try {
+      const response = await forgotPassword(email);
+      if (response.status) {
+        setIsSubmitted(true);
+      } else {
+        setError(response.message || 'Something went wrong');
+      }
+    } catch (err) {
+      setError('Failed to send reset link. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -90,9 +104,10 @@ const ForgotPassword = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="w-full bg-SecondaryColor-0 text-white py-2 px-4 rounded-lg hover:bg-SecondaryColor-1 transition-colors duration-300"
+                disabled={isLoading}
+                className="w-full bg-SecondaryColor-0 text-white py-2 px-4 rounded-lg hover:bg-SecondaryColor-1 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send Reset Link
+                {isLoading ? 'Sending...' : 'Send Reset Link'}
               </motion.button>
             </form>
           ) : (

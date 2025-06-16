@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaBroom, FaWindowMaximize, FaFire, FaSnowflake, FaExclamationTriangle, FaPlus } from "react-icons/fa";
+import { FaBroom, FaWindowMaximize, FaFire, FaSnowflake, FaExclamationTriangle, FaPlus, FaExclamationCircle } from "react-icons/fa";
 
 const DeepCleaning = ({ formData, setFormData, errors }) => {
   const focusAreas = [
@@ -16,27 +16,71 @@ const DeepCleaning = ({ formData, setFormData, errors }) => {
     { id: 'heavy', name: 'Heavy' }
   ];
 
+  const propertySizes = [
+    { id: 'small', name: 'Small (1-2 bedrooms)' },
+    { id: 'medium', name: 'Medium (3-4 bedrooms)' },
+    { id: 'large', name: 'Large (5+ bedrooms)' }
+  ];
+
   const handleFocusAreaToggle = (areaId) => {
-    const currentAreas = formData.focusAreas || [];
-    const newAreas = currentAreas.includes(areaId)
-      ? currentAreas.filter(id => id !== areaId)
-      : [...currentAreas, areaId];
-    
     setFormData({
       ...formData,
-      focusAreas: newAreas
+      propertySize: {
+        ...formData.propertySize,
+        focusAreas: formData.propertySize?.focusAreas?.includes(areaId)
+          ? formData.propertySize.focusAreas.filter(id => id !== areaId)
+          : [...(formData.propertySize?.focusAreas || []), areaId]
+      }
     });
   };
 
   const handleClutterLevelChange = (level) => {
     setFormData({
       ...formData,
-      clutterLevel: level
+      propertySize: {
+        ...formData.propertySize,
+        clutterLevel: level
+      }
+    });
+  };
+
+  const handlePropertySizeChange = (e) => {
+    const value = e.target.value;
+    setFormData({
+      ...formData,
+      propertySize: {
+        ...formData.propertySize,
+        propertySize: value
+      }
     });
   };
 
   return (
     <div className="space-y-6">
+      {/* Property Size */}
+      <div className="p-4 bg-gray-50 rounded-lg">
+        <h3 className="font-semibold mb-4 text-gray-800">Property Size (sq ft)</h3>
+        <div className="relative">
+          <input
+            type="number"
+            value={formData.propertySize?.propertySize || ''}
+            onChange={handlePropertySizeChange}
+            className={`w-full p-4 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent ${
+              errors.propertySize ? 'border-red-500' : 'border-gray-200'
+            }`}
+            placeholder="Enter property size in square feet"
+            min="0"
+          />
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">sq ft</span>
+        </div>
+        {errors.propertySize && (
+          <div className="flex items-center gap-2 mt-2 text-red-500 text-sm">
+            <FaExclamationCircle />
+            <span>{errors.propertySize}</span>
+          </div>
+        )}
+      </div>
+
       {/* Focus Areas */}
       <div className="p-4 bg-gray-50 rounded-lg">
         <h3 className="font-semibold mb-4 text-gray-800">Areas to Focus On</h3>
@@ -51,7 +95,7 @@ const DeepCleaning = ({ formData, setFormData, errors }) => {
               >
                 <input
                   type="checkbox"
-                  checked={(formData.focusAreas || []).includes(area.id)}
+                  checked={(formData.propertySize?.focusAreas || []).includes(area.id)}
                   onChange={() => handleFocusAreaToggle(area.id)}
                   className="w-5 h-5 text-SecondaryColor-0 rounded border-gray-300 focus:ring-SecondaryColor-0"
                 />
@@ -76,7 +120,7 @@ const DeepCleaning = ({ formData, setFormData, errors }) => {
               whileTap={{ scale: 0.98 }}
               onClick={() => handleClutterLevelChange(level.id)}
               className={`p-4 rounded-lg text-center transition-colors ${
-                formData.clutterLevel === level.id
+                formData.propertySize?.clutterLevel === level.id
                   ? 'bg-SecondaryColor-0 text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-50'
               }`}
@@ -85,6 +129,11 @@ const DeepCleaning = ({ formData, setFormData, errors }) => {
             </motion.button>
           ))}
         </div>
+        {errors.propertySize && (
+          <div className="mt-2 text-red-500 text-sm">
+            {errors.propertySize}
+          </div>
+        )}
       </div>
 
       {/* Mold/Mildew Concerns */}
@@ -94,8 +143,14 @@ const DeepCleaning = ({ formData, setFormData, errors }) => {
           <h3 className="font-semibold text-gray-800">Mold/Mildew Concerns</h3>
         </div>
         <textarea
-          value={formData.moldConcerns || ''}
-          onChange={(e) => setFormData({ ...formData, moldConcerns: e.target.value })}
+          value={formData.propertySize?.moldConcerns || ''}
+          onChange={(e) => setFormData({
+            ...formData,
+            propertySize: {
+              ...formData.propertySize,
+              moldConcerns: e.target.value
+            }
+          })}
           className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent border-gray-200"
           placeholder="Please describe any mold or mildew concerns..."
           rows="3"
@@ -106,34 +161,45 @@ const DeepCleaning = ({ formData, setFormData, errors }) => {
       <div className="p-4 bg-gray-50 rounded-lg">
         <div className="flex items-center justify-between">
           <h3 className="font-semibold text-gray-800">Post-Construction Cleaning Needed</h3>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setFormData({ 
-              ...formData, 
-              postConstruction: !formData.postConstruction 
-            })}
-            className={`w-10 h-10 rounded-full shadow-sm flex items-center justify-center ${
-              formData.postConstruction 
-                ? 'bg-SecondaryColor-0 text-white' 
-                : 'bg-white text-gray-600 hover:bg-gray-100'
-            }`}
-          >
-            <FaPlus className="w-4 h-4" />
-          </motion.button>
+          <div className="flex gap-2">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setFormData({
+                ...formData,
+                propertySize: {
+                  ...formData.propertySize,
+                  postConstruction: 'yes'
+                }
+              })}
+              className={`px-4 py-2 rounded-lg text-center transition-colors ${
+                formData.propertySize?.postConstruction === 'yes'
+                  ? 'bg-SecondaryColor-0 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              Yes
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setFormData({
+                ...formData,
+                propertySize: {
+                  ...formData.propertySize,
+                  postConstruction: 'no'
+                }
+              })}
+              className={`px-4 py-2 rounded-lg text-center transition-colors ${
+                formData.propertySize?.postConstruction === 'no'
+                  ? 'bg-SecondaryColor-0 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              No
+            </motion.button>
+          </div>
         </div>
-      </div>
-
-      {/* Additional Notes */}
-      <div className="p-4 bg-gray-50 rounded-lg">
-        <label className="block mb-2 font-medium text-gray-700">Additional Notes</label>
-        <textarea
-          value={formData.additionalNotes || ''}
-          onChange={(e) => setFormData({ ...formData, additionalNotes: e.target.value })}
-          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent border-gray-200"
-          placeholder="Any other specific requirements or concerns?"
-          rows="3"
-        />
       </div>
     </div>
   );

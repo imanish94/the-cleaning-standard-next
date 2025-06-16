@@ -72,8 +72,8 @@ const Footer = () => {
             </form>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-12">
-          <div className="2xl:col-span-4">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-12">
+          <div className="2xl:col-span-6">
             <Image 
               src={Logo}
               alt="Footer Logo"
@@ -107,54 +107,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="2xl:col-span-3">
-            <h4 className="font-Inter text-2xl text-white font-semibold mb-[30px]">
-              Company
-            </h4>
-            <ul>
-              <li>
-                <Link href="/">
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
-                    <FaChevronRight className="text-sm opacity-50" />
-                    Home
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link href="/about">
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
-                    <FaChevronRight className="text-sm opacity-50" />
-                    About Us
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link href="/service">
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
-                    <FaChevronRight className="text-sm opacity-50" />
-                    Our Services
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link href="/team_inner">
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
-                    <FaChevronRight className="text-sm opacity-50" />
-                    Meet Our Team
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog_list">
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1">
-                    <FaChevronRight className="text-sm opacity-50" />
-                    Latest Blog
-                  </button>
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="2xl:col-span-5">
+          <div className="2xl:col-span-6">
             <h4 className="font-Inter text-2xl text-white font-semibold mb-10">
               Contact Info
             </h4>

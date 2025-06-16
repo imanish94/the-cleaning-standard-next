@@ -89,44 +89,6 @@ const ServiceDetails = ({ service }) => {
     </div>
   );
 
-  const renderDownloads = () => (
-    <div className="bg-[#f3f4f8] rounded-md px-4 sm:px-8 lg:px-6 xl:px-8 pt-7 pb-4 mb-7">
-      <h4 className="font-Inter font-semibold text-2xl text-HeadingColor-0 pb-3 mb-8 relative before:absolute before:bottom-0 before:left-0 before:w-7 before:h-[2px] before:bg-SecondaryColor-0">
-        Downloads
-      </h4>
-      <ul className="mt-8">
-        <li>
-          <Link href="/">
-            <button className="w-full font-Inter text-left text-white transition-all duration-500 group px-7 py-4 flex items-center justify-between rounded bg-HoverColor-0 mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
-              <span className="flex items-center gap-3">
-                <BsFileEarmarkPdf
-                  size={20}
-                  className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white"
-                />
-                Service Report
-              </span>
-              <HiDownload size={24} className="text-white" />
-            </button>
-          </Link>
-        </li>
-        <li>
-          <Link href="/">
-            <button className="w-full font-Inter text-left text-white transition-all duration-500 group px-7 py-4 flex items-center justify-between rounded bg-HoverColor-0 mb-3 overflow-hidden z-[1] relative before:absolute before:top-0 before:right-0 before:w-0 before:-z-[1] before:h-full before:bg-SecondaryColor-0 before:rounded before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 hover:text-white">
-              <span className="flex items-center gap-3">
-                <BsFileEarmarkPdf
-                  size={20}
-                  className="text-SecondaryColor-0 transition-all duration-500 group-hover:text-white"
-                />
-                Service List
-              </span>
-              <HiDownload size={24} className="text-white" />
-            </button>
-          </Link>
-        </li>
-      </ul>
-    </div>
-  );
-
   const renderContactWidget = () => (
     <div className="rounded-lg px-9 overflow-hidden bg-[url('/images/widget-thumb.png')] bg-cover bg-no-repeat bg-center py-[50px]">
       <Image src={wedgetIcon} alt="Widget Icon" width={48} height={48} />
@@ -265,7 +227,6 @@ const ServiceDetails = ({ service }) => {
           <div className="grid grid-cols-3 gap-[70px]">
             <div className="col-span-3 lg:col-span-1">
               {renderServiceCategories()}
-              {renderDownloads()}
               {renderContactWidget()}
             </div>
             {renderServiceContent()}

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaGlassCheers, FaUsers, FaTrash, FaCalendarAlt, FaExclamationTriangle } from "react-icons/fa";
+import { FaGlassCheers, FaUsers, FaTrash, FaCalendarAlt, FaExclamationTriangle, FaExclamationCircle } from "react-icons/fa";
 
 const EventCleaning = ({ formData, setFormData, errors }) => {
   const eventTypes = [
@@ -19,14 +19,31 @@ const EventCleaning = ({ formData, setFormData, errors }) => {
   const handleEventTypeChange = (type) => {
     setFormData({
       ...formData,
-      eventType: type
+      propertySize: {
+        ...formData.propertySize,
+        eventType: type
+      }
     });
   };
 
   const handleCleaningTypeChange = (type) => {
     setFormData({
       ...formData,
-      cleaningType: type
+      propertySize: {
+        ...formData.propertySize,
+        cleaningType: type
+      }
+    });
+  };
+
+  const handlePropertySizeChange = (e) => {
+    const value = e.target.value;
+    setFormData({
+      ...formData,
+      propertySize: {
+        ...formData.propertySize,
+        propertySize: value
+      }
     });
   };
 
@@ -46,7 +63,7 @@ const EventCleaning = ({ formData, setFormData, errors }) => {
               whileTap={{ scale: 0.98 }}
               onClick={() => handleEventTypeChange(type.id)}
               className={`p-4 rounded-lg text-center transition-colors ${
-                formData.eventType === type.id
+                formData.propertySize?.eventType === type.id
                   ? 'bg-SecondaryColor-0 text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-50'
               }`}
@@ -57,19 +74,28 @@ const EventCleaning = ({ formData, setFormData, errors }) => {
         </div>
       </div>
 
-      {/* Venue Size */}
+      {/* Property Size */}
       <div className="p-4 bg-gray-50 rounded-lg">
-        <div className="flex items-center gap-3 mb-4">
-          <FaGlassCheers className="w-5 h-5 text-SecondaryColor-0" />
-          <h3 className="font-semibold text-gray-800">Venue Size (Square Footage)</h3>
+        <h3 className="font-semibold mb-4 text-gray-800">Venue Size (sq ft)</h3>
+        <div className="relative">
+          <input
+            type="number"
+            value={formData.propertySize?.propertySize || ''}
+            onChange={handlePropertySizeChange}
+            className={`w-full p-4 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent ${
+              errors.propertySize ? 'border-red-500' : 'border-gray-200'
+            }`}
+            placeholder="Enter venue size in square feet"
+            min="0"
+          />
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">sq ft</span>
         </div>
-        <input
-          type="number"
-          value={formData.squareFootage || ''}
-          onChange={(e) => setFormData({ ...formData, squareFootage: e.target.value })}
-          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent border-gray-200"
-          placeholder="Enter venue size in square feet"
-        />
+        {errors.propertySize && (
+          <div className="flex items-center gap-2 mt-2 text-red-500 text-sm">
+            <FaExclamationCircle />
+            <span>{errors.propertySize}</span>
+          </div>
+        )}
       </div>
 
       {/* Guest Count */}
@@ -80,8 +106,14 @@ const EventCleaning = ({ formData, setFormData, errors }) => {
         </div>
         <input
           type="number"
-          value={formData.guestCount || ''}
-          onChange={(e) => setFormData({ ...formData, guestCount: e.target.value })}
+          value={formData.propertySize?.guestCount || ''}
+          onChange={(e) => setFormData({
+            ...formData,
+            propertySize: {
+              ...formData.propertySize,
+              guestCount: parseInt(e.target.value) || 0
+            }
+          })}
           className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent border-gray-200"
           placeholder="Enter expected number of guests"
         />
@@ -101,7 +133,7 @@ const EventCleaning = ({ formData, setFormData, errors }) => {
               whileTap={{ scale: 0.98 }}
               onClick={() => handleCleaningTypeChange(type.id)}
               className={`p-4 rounded-lg text-center transition-colors ${
-                formData.cleaningType === type.id
+                formData.propertySize?.cleaningType === type.id
                   ? 'bg-SecondaryColor-0 text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-50'
               }`}
@@ -118,25 +150,43 @@ const EventCleaning = ({ formData, setFormData, errors }) => {
           <FaTrash className="w-5 h-5 text-SecondaryColor-0" />
           <h3 className="font-semibold text-gray-800">Trash Removal</h3>
         </div>
-        <div className="space-y-3">
-          <label className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              checked={formData.needsTrashRemoval || false}
-              onChange={(e) => setFormData({ ...formData, needsTrashRemoval: e.target.checked })}
-              className="w-5 h-5 text-SecondaryColor-0 rounded border-gray-300 focus:ring-SecondaryColor-0"
-            />
-            <span className="text-gray-700">Regular Trash Removal Required</span>
-          </label>
-          <label className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              checked={formData.needsRecyclingRemoval || false}
-              onChange={(e) => setFormData({ ...formData, needsRecyclingRemoval: e.target.checked })}
-              className="w-5 h-5 text-SecondaryColor-0 rounded border-gray-300 focus:ring-SecondaryColor-0"
-            />
-            <span className="text-gray-700">Recycling Removal Required</span>
-          </label>
+        <div className="grid grid-cols-2 gap-3">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setFormData({
+              ...formData,
+              propertySize: {
+                ...formData.propertySize,
+                trashRemoval: true
+              }
+            })}
+            className={`p-4 rounded-lg text-center transition-colors ${
+              formData.propertySize?.trashRemoval === true
+                ? 'bg-SecondaryColor-0 text-white'
+                : 'bg-white text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            Yes
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setFormData({
+              ...formData,
+              propertySize: {
+                ...formData.propertySize,
+                trashRemoval: false
+              }
+            })}
+            className={`p-4 rounded-lg text-center transition-colors ${
+              formData.propertySize?.trashRemoval === false
+                ? 'bg-SecondaryColor-0 text-white'
+                : 'bg-white text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            No
+          </motion.button>
         </div>
       </div>
 
@@ -147,8 +197,14 @@ const EventCleaning = ({ formData, setFormData, errors }) => {
           <h3 className="font-semibold text-gray-800">Special Requirements</h3>
         </div>
         <textarea
-          value={formData.specialRequirements || ''}
-          onChange={(e) => setFormData({ ...formData, specialRequirements: e.target.value })}
+          value={formData.propertySize?.specialRequirements || ''}
+          onChange={(e) => setFormData({
+            ...formData,
+            propertySize: {
+              ...formData.propertySize,
+              specialRequirements: e.target.value
+            }
+          })}
           className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-SecondaryColor-0 focus:border-transparent border-gray-200"
           placeholder="Any special requirements or considerations? (e.g., confetti cleanup, specific areas to focus on)"
           rows="3"
