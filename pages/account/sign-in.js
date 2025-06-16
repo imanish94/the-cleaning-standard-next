@@ -2,14 +2,22 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
+
+const LoadingSpinner = () => (
+  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+);
 
 const SignIn = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const validateForm = () => {
     const newErrors = {};
@@ -30,11 +38,36 @@ const SignIn = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (validateForm()) {
-      // Handle sign in logic here
-      console.log('Form submitted:', formData);
+      setLoading(true);
+      setErrors({});
+
+      try {
+        const response = await signIn("credentials", {
+          redirect: false,
+          email: formData.email,
+          password: formData.password
+        });
+
+        console.log("response", response);
+
+        if (response?.error) {
+          if(response.status === 401){
+            setErrors({ submit: "Please enter a valid email or password." });
+          }else{
+            setErrors({ submit: response.error });
+          }
+        } else {
+          router.push("/");
+        }
+      } catch (error) {
+        setErrors({ submit: 'An error occurred. Please try again.' });
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -145,10 +178,21 @@ const SignIn = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="w-full bg-SecondaryColor-0 text-white py-3 px-4 rounded-xl hover:bg-SecondaryColor-1 transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl"
+              disabled={loading}
+              className="w-full bg-SecondaryColor-0 text-white py-3 px-4 rounded-xl hover:bg-SecondaryColor-1 transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              Sign In
+              {loading ? (
+                <>
+                  <LoadingSpinner />
+                  <span>Signing in...</span>
+                </>
+              ) : (
+                'Sign In'
+              )}
             </motion.button>
+            {errors.submit && (
+              <p className="text-sm text-red-500 text-center">{errors.submit}</p>
+            )}
           </form>
 
           <div className="text-center">

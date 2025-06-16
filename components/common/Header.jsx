@@ -11,23 +11,35 @@ import {
   FaPinterestP,
   FaRegClock,
   FaXTwitter,
+  FaUser,
 } from "react-icons/fa6";
 import { BiChevronDown } from "react-icons/bi";
-import Logo from "@/public/images/logo-cleaning.png";
+import Logo from "@/public/images/logo-cleaning-demo.png";
 import { useState, useEffect } from "react";
 import { IoMdCall, IoMdClose } from "react-icons/io";
-import { BsEnvelope } from "react-icons/bs";
-import { TbGridDots } from "react-icons/tb";
 import { TfiLocationPin } from "react-icons/tfi";
+import { useSession, signOut } from "next-auth/react";
+import { verifyUser } from "@/utils/api/common";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const { data: session, status } = useSession();
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Add effect to handle expired session
+  useEffect(() => {
+    if (pathname === "/account/sign-in" && router.query.isSessionExpired === "expired") {
+      signOut({ redirect: false });
+    }
+  }, [pathname, router.query.isSessionExpired]);
 
   //sticky
   useEffect(() => {
@@ -88,8 +100,8 @@ const Header = () => {
           <ul className="shadow-lg hidden group-hover:block rounded-sm text-white w-[220px] text-left transition-all duration-500 text-sm py-4 bg-HeadingColor-0">
             <div className="px-5 group hover:bg-SecondaryColor-0">
               <li className="hover:ml-3 duration-300">
-                <Link href="/service-details/office-cleaning" className="py-2 block">
-                  Office Cleaning
+                <Link href="/service-details/house-cleaning" className="py-2 block">
+                  House Cleaning
                 </Link>
               </li>
             </div>
@@ -102,15 +114,15 @@ const Header = () => {
             </div>
             <div className="px-5 group hover:bg-SecondaryColor-0">
               <li className="hover:ml-3 duration-300">
-                <Link href="/service-details/regular-house-cleaning" className="py-2 block">
-                  Regular House Cleaning
+                <Link href="/service-details/airbnb-cleaning" className="py-2 block">
+                  Airbnb Cleaning
                 </Link>
               </li>
             </div>
             <div className="px-5 group hover:bg-SecondaryColor-0">
               <li className="hover:ml-3 duration-300">
-                <Link href="/service-details/event-cleaning" className="py-2 block">
-                  Event Cleaning
+                <Link href="/service-details/office-cleaning" className="py-2 block">
+                  Office Cleaning
                 </Link>
               </li>
             </div>
@@ -118,6 +130,13 @@ const Header = () => {
               <li className="hover:ml-3 duration-300">
                 <Link href="/service-details/retail-space-cleaning" className="py-2 block">
                   Retail Space Cleaning
+                </Link>
+              </li>
+            </div>
+            <div className="px-5 group hover:bg-SecondaryColor-0">
+              <li className="hover:ml-3 duration-300">
+                <Link href="/service-details/event-cleaning" className="py-2 block">
+                  Event Cleaning
                 </Link>
               </li>
             </div>
@@ -153,9 +172,69 @@ const Header = () => {
     </ul>
   ) : null;
 
+  const UserMenu = () => {
+    if (status === "loading") {
+      return (
+        <div className="animate-pulse bg-gray-200 h-8 w-8 rounded-full"></div>
+      );
+    }
+
+    // Check if we're on the sign-in page with expired session
+    const isExpiredSession = pathname === "/account/sign-in" && router.query.isSessionExpired === "expired";
+
+    if (status === "authenticated" && !isExpiredSession) {
+      return (
+        <div className="relative">
+          <button
+            onClick={() => setShowUserMenu(!showUserMenu)}
+            className="flex items-center gap-2 text-HeadingColor-0 hover:text-PrimaryColor-0 transition-colors"
+          >
+            <div className="w-8 h-8 rounded-full bg-SecondaryColor-0 flex items-center justify-center text-white">
+              {session.user?.name?.[0] || session.user?.email?.[0] || <FaUser />}
+            </div>
+            <span className="hidden lg:block">{session.user?.name || session.user?.email}</span>
+          </button>
+          
+          {showUserMenu && (
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
+              <Link
+                href="/account/profile"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Profile
+              </Link>
+              <Link
+                href="/account/my-booking"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                My Bookings
+              </Link>
+              <button
+                onClick={() => signOut()}
+                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Sign Out
+              </button>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <Link
+        href="/account/sign-in"
+        className="inline-flex items-center gap-2 bg-SecondaryColor-0 text-white px-4 py-2 rounded-lg hover:bg-SecondaryColor-1 transition-colors"
+      >
+        <FaUser />
+        <span>Sign In</span>
+      </Link>
+    );
+  };
+
   return (
     <nav
-      className={`w-full transition-all duration-300 bg-transparent relativee text-[#7d7f8c] z-[99999]`}
+      className={`w-full transition-all duration-300 bg-transparent relativee text-[#7d7f8c] z-[9999]`}
     >
       {/* top Navbar */}
       <header className="bg-SecondaryColor-0 overflow-hidden md:block relative z-10">
@@ -201,7 +280,6 @@ const Header = () => {
                 </Link>
               </li>
             </ul>
-           
           </div>
           <div className="lg:flex items-center gap-2 hidden">
             <h6 className="flex items-center gap-2 text-sm text-white font-Poppins font-light">
@@ -228,28 +306,28 @@ const Header = () => {
           {/* main Navbar */}
           <div className="flex flex-col lg:flex-row items-center justify-between lg:h-[100px] bg-white">
             {/* website Logo */}
-            <div className="w-48">
+            <div>
               <Link href="/">
                 <Image
                   src={Logo}
-                  className="hidden lg:block w-full"
+                  className="hidden lg:block w-full h-auto object-contain"
                   alt="website_logo"
-                  width={192}
-                  height={48}
+                  width={270}
+                  height={70}
                   priority
                 />
               </Link>
             </div>
             {/* small screen size */}
             <div className="px-3 w-full lg:hidden flex justify-between bg-khaki h-[70px] items-center p-3">
-              <div className="w-28">
+              <div className="w-32">
                 <Link href="/">
                   <Image
                     src={Logo}
-                    className="block lg:hidden"
+                    className="block lg:hidden w-full h-auto object-contain"
                     alt="constre_website_logo"
-                    width={112}
-                    height={28}
+                    width={300}
+                    height={70}
                     priority
                   />
                 </Link>
@@ -271,13 +349,7 @@ const Header = () => {
             <div className="flex gap-6 items-center">
               {mobileMenu}
               <div className="hidden lg:flex items-center gap-4">
-                <Link
-                  href="/account/sign-in"
-                  className="header-btn !text-white hover:!text-HeadingColor-0 !bg-SecondaryColor-0 before:bg-PrimaryColor-0 after:bg-PrimaryColor-0"
-                >
-                  Sign In
-                </Link>
-                
+                <UserMenu />
               </div>
             </div>
             {/* large device visible button and search icon */}

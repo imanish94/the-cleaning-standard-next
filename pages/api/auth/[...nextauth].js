@@ -1,55 +1,104 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import axios from "axios";
+import {verifyUser} from "@/utils/api/common";
 
-export default NextAuth({
+export const authOptions = {
+  site: process.env.NEXTAUTH_URL,
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: "credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
+        email: { label: "Email address", type: "text" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials) {
-        // Add your authentication logic here
-        // This is where you would typically validate against your database
-        if (credentials?.email && credentials?.password) {
-          // For demo purposes, you can add a simple check
-          // Replace this with your actual authentication logic
-          if (credentials.email === "demo@example.com" && credentials.password === "demo123") {
+      authorize: async credentials => {
+        try {
+          const params = {
+            email: credentials.email,
+            password: credentials.password
+          };
+
+          const url = `${process.env.API_URL}/customer/login`;
+          const { data } = await axios.post(url, params);
+
+          if (data.status) {
             return {
-              id: 1,
-              name: "Demo User",
-              email: credentials.email,
+              ...data.data,
+              token: data.token
             };
           }
+          else {
+            throw new Error(data.message);
+          }
+        } catch (e) {
+          throw new Error(e.message);
         }
-        return null;
       }
     })
   ],
-  pages: {
-    signIn: '/auth/signin',
-    // signOut: '/auth/signout',
-    // error: '/auth/error',
-    // verifyRequest: '/auth/verify-request',
-    // newUser: '/auth/new-user'
-  },
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
+    jwt: async ({ user, token, trigger, session }) => {
+      if (trigger === "update" && session) {
+        token.user = { ...token.user, ...session?.user };
+        return token;
       }
+
+      if (user) {
+        token.user = {
+          ...user,
+          token: user.token
+        };
+      }
+
       return token;
     },
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id;
+    redirect: async ({ url, baseUrl }) => {
+      if (url.startsWith("/")) {
+        return new URL(url, baseUrl).toString();
+      } else if (new URL(url).origin === baseUrl) {
+        return url;
       }
-      return session;
+
+      return baseUrl;
+    },
+    session: async ({ session, token }) => {
+      const isUserValid = await verifyUser({
+        token: token.user.token
+      });
+
+      let newSession = { ...session };
+
+      if (isUserValid.status) {
+        newSession.user = {
+          ...isUserValid.data,
+          token: token.user.token
+        };
+      } else {
+        if (token.user) {
+          newSession.user = {
+            ...token.user,
+            token: token.user.token
+          };
+        }
+      }
+      console.log("session", newSession);  
+      return newSession;
     }
+  },
+  pages: {
+    signIn: "/account/login",
+    signOut: "/auth/signout"
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+    maxAge: 2 * 60 * 60
+  },
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+    maxAge: 2 * 60 * 60
   }
-}); 
+};
+
+export default NextAuth(authOptions);

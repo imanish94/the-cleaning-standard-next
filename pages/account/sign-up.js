@@ -1,85 +1,108 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser, FaGoogle, FaFacebook } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser } from 'react-icons/fa';
 import Link from 'next/link';
 import Breadcamp from "../../components/Breadcamp";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { accountCreateFields } from '@/utils/constants/create-account';
+import { createCustomerAccount } from '@/utils/api/common';
+import { validateSignUpForm } from '@/utils/validations/signUpValidation';
+import { useRouter } from 'next/router';
 
 const SignUp = () => {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
+  const router = useRouter();
+  const [formData, setFormData] = useState(accountCreateFields);
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [responseError, setResponseError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [countdown, setCountdown] = useState(9);
 
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.fullName) {
-      newErrors.fullName = 'Full name is required';
+  useEffect(() => {
+    let timer;
+    if (successMessage && countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000);
+    } else if (countdown === 0) {
+      router.push('/account/sign-in');
     }
-    
-    if (!formData.email) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-    
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
-    
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    return () => clearInterval(timer);
+  }, [successMessage, countdown, router]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      // Handle sign up logic here
-      console.log('Form submitted:', formData);
-    }
-  };
+    setResponseError('');
+    setLoading(true);
+    setSuccessMessage('');
 
-  const handleSocialSignUp = (provider) => {
-    // Handle social sign up logic here
-    console.log(`Sign up with ${provider}`);
+    const { isValid, errors: validationErrors } = validateSignUpForm(formData);
+    
+    if (isValid) {
+      try {
+        // Create API request payload with only required fields
+        const apiPayload = {
+          name: formData.fullName,
+          email: formData.email,
+          password: formData.password
+        };
+
+        const { status, data } = await createCustomerAccount(apiPayload);
+        
+        if (data.status) {
+          setSuccessMessage('Account created successfully!');
+          setCountdown(9);
+        } else {
+          setResponseError(data.message || 'Failed to create account');
+        }
+      } catch (error) {
+        setResponseError(error.message || 'An error occurred while creating your account');
+      }
+    } else {
+      setErrors(validationErrors);
+    }
+    
+    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Breadcamp
-        breadCampTitle="Create Account"
-        breadCampLink="Home"
-        breadcampIcon={<FaArrowRightLong />}
-        breadcampIcon2={<FaArrowRightLong />}
-        breadCampContent="Create Account"
-        url="/"
-      />
-      
-      <div className="max-w-md mx-auto px-4 py-8">
+    <div className="min-h-screen relative">
+      {/* Background Image with Overlay */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url("/images/blue-banner-bubbles.jpg")',
+        }}
+      >
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      </div>
+
+      <div className="relative min-h-screen flex items-center justify-center px-4 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white rounded-xl shadow-lg p-8"
+          className="w-full max-w-md bg-white/95 backdrop-blur-sm rounded-xl shadow-lg p-8"
         >
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-gray-800 mb-2">Create Account</h1>
             <p className="text-gray-600">Sign up to get started with our services</p>
           </div>
+
+          {responseError && (
+            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+              {responseError}
+            </div>
+          )}
+
+          {successMessage && (
+            <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+              <p>{successMessage}</p>
+              <p className="mt-1 text-sm">Redirecting to login page in {countdown} seconds...</p>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
@@ -220,43 +243,14 @@ const SignUp = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="w-full bg-SecondaryColor-0 text-white py-2 px-4 rounded-lg hover:bg-SecondaryColor-1 transition-colors duration-300"
+              disabled={loading || successMessage}
+              className={`w-full bg-SecondaryColor-0 text-white py-2 px-4 rounded-lg hover:bg-SecondaryColor-1 transition-colors duration-300 ${
+                (loading || successMessage) ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
             >
-              Create Account
+              {loading ? 'Creating Account...' : 'Create Account'}
             </motion.button>
           </form>
-
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or sign up with</span>
-              </div>
-            </div>
-
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => handleSocialSignUp('Google')}
-                className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-gray-700 hover:bg-gray-50"
-              >
-                <FaGoogle className="h-5 w-5 text-red-500 mr-2" />
-                Google
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => handleSocialSignUp('Facebook')}
-                className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-gray-700 hover:bg-gray-50"
-              >
-                <FaFacebook className="h-5 w-5 text-blue-600 mr-2" />
-                Facebook
-              </motion.button>
-            </div>
-          </div>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">

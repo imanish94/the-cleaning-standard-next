@@ -7,44 +7,35 @@ import eventCleaningIcon from "@/public/images/calendar.png";
 import retailCleaningIcon from "@/public/images/hand-shake.png";
 import FeatureCard from "./cards/FeatureCard";
 
-const processData = [
-  {
-    id: 1,
-    featureIcon: officeCleaningIcon,
-    featureTitle: "Office Cleaning",
-  },
-  {
-    id: 2,
-    featureIcon: deepCleaningIcon,
-    featureTitle: "Deep Cleaning",
-  },
-  {
-    id: 3,
-    featureIcon: houseCleaningIcon,
-    featureTitle: "Regular House Cleaning",
-  },
-  {
-    id: 4,
-    featureIcon: eventCleaningIcon,
-    featureTitle: "Event Cleaning",
-  },
-  {
-    id: 5,
-    featureIcon: retailCleaningIcon,
-    featureTitle: "Retail Space Cleaning",
-  },
-];
+const getIconForService = (serviceName) => {
+  switch (serviceName) {
+    case 'House Cleaning':
+      return houseCleaningIcon;
+    case 'Deep Cleaning':
+      return deepCleaningIcon;
+    case 'Airbnb Cleaning':
+      return houseCleaningIcon;
+    case 'Office Cleaning':
+      return officeCleaningIcon;
+    case 'Retail Space Cleaning':
+      return retailCleaningIcon;
+    case 'Event Cleaning':
+      return eventCleaningIcon;
+    default:
+      return houseCleaningIcon;
+  }
+};
 
-const Feature = () => {
+const Feature = ({services}) => {
   return (
     <section className="py-20 bg-[#f3f4f8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-8">
-          {processData.map(({ id, featureIcon, featureTitle }) => (
-            <div key={id} className="w-full">
+          {services.map((service) => (
+            <div key={service.uuid} className="w-full">
               <FeatureCard
-                featureIcon={featureIcon}
-                featureTitle={featureTitle}
+                featureIcon={getIconForService(service.name)}
+                featureTitle={service.name}
               />
             </div>
           ))}

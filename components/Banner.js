@@ -22,7 +22,7 @@ const Banner = () => {
               <br className="lg:hidden xl:block" />
               web services We try to Help you as soon as possible clean.
             </p>
-            <Link href="/about">
+            <Link href="/book-appointment">
               <button className="primary-btn2 mt-1">
                 Get Started Now
                 <FaArrowRightLong size={20} />

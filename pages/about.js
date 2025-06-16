@@ -1,13 +1,14 @@
 import { FaArrowRightLong } from "react-icons/fa6";
-import Layout from "../components/Layout";
 import Breadcamp from "../components/Breadcamp";
 import Image from "next/image";
 import { FaCheck, FaBuilding, FaHome, FaCalendarAlt, FaStore, FaBroom } from "react-icons/fa";
 import { MdCleaningServices, MdVerifiedUser, MdSupportAgent, MdEco } from "react-icons/md";
 import Link from "next/link";
 import Process from "@/components/Process";
+import { getServices } from "@/utils/api/common";
 
-const AboutInner = () => {
+const About = ({services}) => {
+    console.log("services", services);
     return (
     <>
         <Breadcamp
@@ -112,47 +113,21 @@ const AboutInner = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Office Cleaning",
-                description: "Professional cleaning services for offices and workplaces, ensuring a clean and healthy environment for your employees.",
-                icon: <FaBuilding className="text-SecondaryColor-0 text-3xl" />
-              },
-              {
-                title: "Deep Cleaning",
-                description: "Thorough cleaning services that reach every corner, perfect for spring cleaning or preparing for special occasions.",
-                icon: <FaBroom className="text-SecondaryColor-0 text-3xl" />
-              },
-              {
-                title: "Regular House Cleaning",
-                description: "Consistent and reliable cleaning services to maintain your home's cleanliness and comfort.",
-                icon: <FaHome className="text-SecondaryColor-0 text-3xl" />
-              },
-              {
-                title: "Event Cleaning",
-                description: "Pre and post-event cleaning services to ensure your venue is spotless for your guests.",
-                icon: <FaCalendarAlt className="text-SecondaryColor-0 text-3xl" />
-              },
-              {
-                title: "Retail Space Cleaning",
-                description: "Specialized cleaning services for retail spaces, maintaining a welcoming environment for your customers.",
-                icon: <FaStore className="text-SecondaryColor-0 text-3xl" />
-              }
-            ].map((service, index) => (
-              <div key={index} className="bg-white p-8 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] transition-shadow h-full flex flex-col">
+            {services.map((service) => (
+              <div key={service.id} className="bg-white p-8 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] transition-shadow h-full flex flex-col">
                 <div className="flex flex-col items-center flex-grow">
                   <div className="w-20 h-20 rounded-full bg-[#f3f4f8] flex items-center justify-center mb-6">
-                    {service.icon}
+                    <FaHome className="text-SecondaryColor-0 text-3xl" />
                   </div>
                   <h3 className="font-Inter font-semibold text-xl text-HeadingColor-0 mb-4 text-center">
-                    {service.title}
+                    {service.name}
                   </h3>
                   <p className="font-Poppins font-light text-TextColor-0 mb-6 text-center leading-relaxed">
                     {service.description}
                   </p>
                   <div className="mt-auto pt-4">
                     <Link 
-                      href={`/service-details/${service.title.toLowerCase().replace(/\s+/g, '-')}`}
+                      href={`/service-details/${service.name.toLowerCase().replace(/\s+/g, '-')}`}
                       className="inline-block bg-SecondaryColor-0 text-white px-6 py-3 rounded-md hover:bg-opacity-90 transition-colors duration-300"
                     >
                       Book Now
@@ -223,4 +198,23 @@ const AboutInner = () => {
     );
 };
 
-export default AboutInner;
+export default About;
+
+
+export async function getServerSideProps() {
+  try {
+    const servicesData = await getServices();
+
+    return {
+      props: {
+        services: servicesData.data || []
+      }
+    };
+  } catch (error) {
+    return {
+      props: {
+        services: []
+      }
+    };
+  }
+}

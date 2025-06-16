@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^1.9.0",
     "framer-motion": "^12.16.0",
     "next": "14.1.0",
     "next-auth": "^4.24.11",
     "nextjs-progressbar": "^0.0.16",
+    "nprogress": "^0.2.0",
     "react": "^18.2.0",
     "react-compare-image": "^3.5.4",
     "react-countup": "^6.5.3",

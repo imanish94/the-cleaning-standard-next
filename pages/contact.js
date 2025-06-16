@@ -28,4 +28,10 @@ const ContactPage = () => {
   );
 };
 
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
+}
+
 export default ContactPage;

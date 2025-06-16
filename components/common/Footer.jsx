@@ -7,7 +7,7 @@ import {
   FaPinterestP,
   FaXTwitter,
 } from "react-icons/fa6";
-import Logo from "@/public/images/logo-cleaning.png";
+import Logo from "@/public/images/footer-logo-ob-yellow.png";
 import { IoLocationOutline } from "react-icons/io5";
 import { FiPhoneCall } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
@@ -72,13 +72,13 @@ const Footer = () => {
             </form>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-12">
-          <div className="2xl:col-span-4">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-12">
+          <div className="2xl:col-span-6">
             <Image 
               src={Logo}
               alt="Footer Logo"
-              width={180}
-              height={60}
+              width={320}
+              height={180}
             />
             <p className="font-Poppins text-white mt-7 mb-9">
               Competently repurpose forward conveniently target e-business
@@ -107,54 +107,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="2xl:col-span-3">
-            <h4 className="font-Inter text-2xl text-white font-semibold mb-[30px]">
-              Company
-            </h4>
-            <ul>
-              <li>
-                <Link href="/">
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
-                    <FaChevronRight className="text-sm opacity-50" />
-                    Home
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link href="/about">
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
-                    <FaChevronRight className="text-sm opacity-50" />
-                    About Us
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link href="/service">
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
-                    <FaChevronRight className="text-sm opacity-50" />
-                    Our Services
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link href="/team_inner">
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1 mb-4">
-                    <FaChevronRight className="text-sm opacity-50" />
-                    Meet Our Team
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog_list">
-                  <button className="flex items-center gap-2 font-Inter text-white transition-all duration-500 hover:text-PrimaryColor-0 hover:gap-1">
-                    <FaChevronRight className="text-sm opacity-50" />
-                    Latest Blog
-                  </button>
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="2xl:col-span-5">
+          <div className="2xl:col-span-6">
             <h4 className="font-Inter text-2xl text-white font-semibold mb-10">
               Contact Info
             </h4>
