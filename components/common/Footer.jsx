@@ -7,7 +7,7 @@ import {
   FaPinterestP,
   FaXTwitter,
 } from "react-icons/fa6";
-import Logo from "@/public/images/footer-logo-ob-yellow.png";
+import Logo from "@/public/images/white-logo.png";
 import { IoLocationOutline } from "react-icons/io5";
 import { FiPhoneCall } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
@@ -42,7 +42,7 @@ const Footer = () => {
                 </p>
                 <Link href="/">
                   <button className="font-Inter text-left font-semibold text-HeadingColor-0 text-[22px] mt-1">
-                    +980 765 (546) 900
+                    +44 7506 123456
                   </button>
                 </Link>
               </div>
@@ -77,8 +77,8 @@ const Footer = () => {
             <Image 
               src={Logo}
               alt="Footer Logo"
-              width={320}
-              height={180}
+              width={300}
+              height={120}
             />
             <p className="font-Poppins text-white mt-7 mb-9">
               Competently repurpose forward conveniently target e-business
@@ -86,22 +86,22 @@ const Footer = () => {
             </p>
             <ul className="flex gap-3">
               <li>
-                <button className="w-10 h-10 rounded-full border-2 border-[#ffc702] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
+                <button className="w-10 h-10 rounded-full border-2 border-bg-white flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
                   <FaFacebookF />
                 </button>
               </li>
               <li>
-                <button className="w-10 h-10 rounded-full border-2 border-[#ffc702] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
+                <button className="w-10 h-10 rounded-full border-2 border-bg-white flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
                   <FaXTwitter />
                 </button>
               </li>
               <li>
-                <button className="w-10 h-10 rounded-full border-2 border-[#ffc702] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
+                <button className="w-10 h-10 rounded-full border-2 border-bg-white flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
                   <FaLinkedinIn />
                 </button>
               </li>
               <li>
-                <button className="w-10 h-10 rounded-full border-2 border-[#ffc702] flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
+                <button className="w-10 h-10 rounded-full border-2 border-bg-white flex items-center justify-center text-white overflow-hidden transition-all duration-500 hover:border-SecondaryColor-0 relative z-10 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:-z-10 before:bg-SecondaryColor-0 before:transition-all before:duration-500 before:scale-0 hover:before:scale-100">
                   <FaPinterestP />
                 </button>
               </li>
@@ -112,7 +112,7 @@ const Footer = () => {
               Contact Info
             </h4>
             <div className="flex gap-5 mb-5">
-              <div className="h-[44px] w-[44px] rounded-full border border-dashed border-[#ffc702] flex items-center justify-center text-white text-xl bg-[#183088]">
+              <div className="h-[44px] w-[44px] rounded-full border border-dashed border-bg-white flex items-center justify-center text-white text-xl bg-[#183088]">
                 <IoLocationOutline />
               </div>
               <div className="flex-1 -mt-1">
@@ -125,7 +125,7 @@ const Footer = () => {
               </div>
             </div>
             <div className="flex gap-5 mb-5">
-              <div className="h-[44px] w-[44px] rounded-full border border-dashed border-[#ffc702] flex items-center justify-center text-white text-xl bg-[#183088]">
+              <div className="h-[44px] w-[44px] rounded-full border border-dashed border-bg-white flex items-center justify-center text-white text-xl bg-[#183088]">
                 <FiPhoneCall />
               </div>
               <div className="flex-1 -mt-1">
@@ -133,12 +133,12 @@ const Footer = () => {
                   Call Us
                 </h6>
                 <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
-                  +880 123 (4567) 890
+                +44 7506 123456
                 </p>
               </div>
             </div>
             <div className="flex gap-5">
-              <div className="h-[44px] w-[44px] rounded-full border border-dashed border-[#ffc702] flex items-center justify-center text-white text-xl bg-[#183088]">
+              <div className="h-[44px] w-[44px] rounded-full border border-dashed border-bg-white flex items-center justify-center text-white text-xl bg-[#183088]">
                 <HiOutlineMail />
               </div>
               <div className="flex-1 -mt-1">
@@ -146,13 +146,13 @@ const Footer = () => {
                   Email
                 </h6>
                 <p className="font-Poppins text-[15px] text-[#B9BBD2] mt-[6px]">
-                thecleaningstandard@outlook.com
+                 &nbsp;thecleaningstandard@outlook.com
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <div className="text-left sm:text-center py-6 border-t border-[#ffc702] mt-24">
+        <div className="text-left sm:text-center py-6 border-t border-bg-white mt-24">
           <p className="font-Poppins text-white">
             © Copyrights 2024 The Clening Standard All rights reserved by
             <span className="text-PrimaryColor-0"> The Cleaning Standard</span>

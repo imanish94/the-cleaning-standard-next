@@ -50,7 +50,7 @@ span.swiper-pagination-bullet {
 }
 
 .swiper-pagination-bullet.swiper-pagination-bullet-active {
-  background: #ffc702 !important;
+  background: theme('colors.PrimaryColor.0') !important;
 }
 
 .portfolio2 span.swiper-pagination-bullet {

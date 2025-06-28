@@ -66,7 +66,7 @@ const About = () => {
                   </button>
                 </Link>
               </div>
-              <div className="bg-PrimaryColor-0 rounded-lg w-[192px] h-[192px] flex justify-center items-center flex-col">
+              <div className="bg-white rounded-lg w-[192px] h-[192px] flex justify-center items-center flex-col shadow-md">
                 <Image 
                   src="/images/trophy.png"
                   alt="Counter Icon"
@@ -77,7 +77,7 @@ const About = () => {
                   start={-11}
                   end={12}
                   suffix="+"
-                  className="text-[36px] font-Inter font-bold text-HeadingColor-0"
+                  className="text-[36px] font-Inter font-bold text-PrimaryColor-0"
                 />
                 <p className="font-Poppins text-TextColor-0 font-light">
                   Years Experience

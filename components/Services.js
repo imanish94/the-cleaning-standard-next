@@ -4,6 +4,7 @@ import ServiceCard from "./cards/ServiceCard";
 import officeCleaningIcon from "@/public/images/office-building.png";
 import deepCleaningIcon from "@/public/images/deep.png";
 import houseCleaningIcon from "@/public/images/home.png";
+import airbnbCleaningIcon from "@/public/images/airbnb.png";
 import eventCleaningIcon from "@/public/images/calendar.png";
 import retailCleaningIcon from "@/public/images/hand-shake.png";
 
@@ -14,7 +15,7 @@ const getIconForService = (serviceName) => {
     case 'Deep Cleaning':
       return deepCleaningIcon;
     case 'Airbnb Cleaning':
-      return houseCleaningIcon;
+      return airbnbCleaningIcon;
     case 'Office Cleaning':
       return officeCleaningIcon;
     case 'Retail Space Cleaning':

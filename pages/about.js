@@ -156,33 +156,33 @@ const About = ({services}) => {
               {
                 title: "Experienced Team",
                 description: "Our cleaning professionals are highly trained and experienced in all aspects of cleaning.",
-                icon: <MdCleaningServices className="text-SecondaryColor-0 text-3xl group-hover:text-SecondaryColor-0" />
+                icon: <MdCleaningServices className="text-SecondaryColor-0 text-3xl group-hover:text-white transition-all duration-300 transform group-hover:scale-110" />
               },
               {
                 title: "Eco-Friendly",
                 description: "We use environmentally friendly cleaning products that are safe for your family and pets.",
-                icon: <MdEco className="text-SecondaryColor-0 text-3xl group-hover:text-SecondaryColor-0" />
+                icon: <MdEco className="text-SecondaryColor-0 text-3xl group-hover:text-white transition-all duration-300 transform group-hover:scale-110" />
               },
               {
                 title: "Reliable Service",
                 description: "Count on us for consistent, high-quality cleaning services every time.",
-                icon: <MdVerifiedUser className="text-SecondaryColor-0 text-3xl group-hover:text-SecondaryColor-0" />
+                icon: <MdVerifiedUser className="text-SecondaryColor-0 text-3xl group-hover:text-white transition-all duration-300 transform group-hover:scale-110" />
               },
               {
                 title: "Customer Focus",
                 description: "Your satisfaction is our priority. We listen to your needs and deliver accordingly.",
-                icon: <MdSupportAgent className="text-SecondaryColor-0 text-3xl group-hover:text-SecondaryColor-0" />
+                icon: <MdSupportAgent className="text-SecondaryColor-0 text-3xl group-hover:text-white transition-all duration-300 transform group-hover:scale-110" />
               }
             ].map((feature, index) => (
-              <div key={index} className="rounded-md bg-SecondaryColor-0 p-6 flex flex-col items-center gap-6 group hover:bg-PrimaryColor-0 transition-colors duration-300">
-                <div className="w-[85px] h-[85px] rounded-full bg-white relative flex justify-center items-center">
+              <div key={index} className="rounded-md bg-SecondaryColor-0 p-6 flex flex-col items-center gap-6 group hover:bg-white transition-all duration-500 transform hover:scale-105 hover:shadow-2xl cursor-pointer">
+                <div className="w-[85px] h-[85px] rounded-full bg-white relative flex justify-center items-center group-hover:bg-SecondaryColor-0 transition-all duration-300 transform group-hover:rotate-12">
                   {feature.icon}
                 </div>
                 <div className="text-center">
-                  <h3 className="font-Inter font-bold text-white text-xl mb-2 group-hover:text-SecondaryColor-0 transition-colors duration-300">
+                  <h3 className="font-Inter font-bold text-white text-xl mb-2 group-hover:text-SecondaryColor-0 transition-all duration-300 transform group-hover:translate-y-[-2px]">
                     {feature.title}
                   </h3>
-                  <p className="font-Poppins font-light text-white/80 group-hover:text-SecondaryColor-0/80 transition-colors duration-300">
+                  <p className="font-Poppins font-light text-white/80 group-hover:text-SecondaryColor-0/80 transition-all duration-300">
                     {feature.description}
                   </p>
                 </div>

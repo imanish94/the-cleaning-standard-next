@@ -14,7 +14,7 @@ module.exports = {
         Poppins: ["Poppins", "sans-serif"],
       },
       colors: {
-        PrimaryColor: ["#ffc702"],  
+        PrimaryColor: ["#2563eb"],
         SecondaryColor: ["#2e6dfe"],
         HoverColor: ["#2e6dfe"],
         HeadingColor: ["#00197e"],
