@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { FaArrowRightLong } from "react-icons/fa6";
 import Breadcamp from "../components/Breadcamp";
 import { FaCheck, FaClock, FaCalendarAlt, FaBuilding, FaBroom, FaHome, FaStore } from "react-icons/fa";
@@ -8,6 +9,24 @@ import { getServices } from "@/utils/api/common";
 const OurServices = ({ services }) => {
     return (
         <>
+            <Head>
+                <title>Our Services - The Cleaning Standard</title>
+                <meta name="description" content="Explore our comprehensive range of professional cleaning services including house cleaning, office cleaning, Airbnb cleaning, deep cleaning, and commercial cleaning solutions." />
+                <meta name="keywords" content="cleaning services, house cleaning, office cleaning, Airbnb cleaning, deep cleaning, commercial cleaning, professional cleaners" />
+                
+                {/* Open Graph */}
+                <meta property="og:title" content="Our Services - The Cleaning Standard" />
+                <meta property="og:description" content="Explore our comprehensive range of professional cleaning services including house cleaning, office cleaning, Airbnb cleaning, deep cleaning, and commercial cleaning solutions." />
+                <meta property="og:type" content="website" />
+                <meta property="og:image" content="/images/blue-icon-brand.png" />
+                
+                {/* Twitter */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Our Services - The Cleaning Standard" />
+                <meta name="twitter:description" content="Explore our comprehensive range of professional cleaning services including house cleaning, office cleaning, Airbnb cleaning, deep cleaning, and commercial cleaning solutions." />
+                <meta name="twitter:image" content="/images/blue-icon-brand.png" />
+            </Head>
+            
             <Breadcamp
                 breadCampTitle="Our Services"
                 breadCampLink="Home"
