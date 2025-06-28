@@ -14,7 +14,7 @@ import {
   FaUser,
 } from "react-icons/fa6";
 import { BiChevronDown } from "react-icons/bi";
-import Logo from "@/public/images/logo-cleaning-demo.png";
+import Logo from "@/public/images/png-svg-header.png";
 import { useState, useEffect } from "react";
 import { IoMdCall, IoMdClose } from "react-icons/io";
 import { TfiLocationPin } from "react-icons/tfi";
@@ -291,7 +291,7 @@ const Header = () => {
               className="font-Poppins font-medium text-sm text-white"
             >
               {" "}
-              +980 234 4567
+              +44 7506 123456
             </Link>
           </div>
         </div>
@@ -312,7 +312,7 @@ const Header = () => {
                   src={Logo}
                   className="hidden lg:block w-full h-auto object-contain"
                   alt="website_logo"
-                  width={270}
+                  width={250}
                   height={70}
                   priority
                 />
@@ -320,14 +320,14 @@ const Header = () => {
             </div>
             {/* small screen size */}
             <div className="px-3 w-full lg:hidden flex justify-between bg-khaki h-[70px] items-center p-3">
-              <div className="w-32">
+              <div className="w-64">
                 <Link href="/">
                   <Image
                     src={Logo}
                     className="block lg:hidden w-full h-auto object-contain"
                     alt="constre_website_logo"
-                    width={300}
-                    height={70}
+                    width={280}
+                    height={90}
                     priority
                   />
                 </Link>

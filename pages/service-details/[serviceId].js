@@ -97,13 +97,13 @@ const ServiceDetails = ({ service }) => {
       </h6>
       <Link href="/">
         <button className="font-Inter font-semibold text-2xl text-white">
-          +123 (4567) 890
+          
         </button>
       </Link>
       <Link href="/">
         <button className="font-Inter text-white flex items-center mt-4 mb-[52px]">
           <MdEmail className="text-xl text-SecondaryColor-0" />
-          example@gmail.com
+          &nbsp;thecleaningstandard@outlook.com
         </button>
       </Link>
       <Link href="/">

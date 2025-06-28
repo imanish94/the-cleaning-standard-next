@@ -302,7 +302,7 @@ const Appointment = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-PrimaryColor-0 border border-transparent font-medium font-Inter transition-all duration-500 hover:text-white text-TextColor-0 hover:border-white outline-0 h-[60px] rounded py-3 flex items-center justify-center gap-2 relative z-10 overflow-hidden before:absolute before:top-0 before:right-0 before:w-0 before:h-full before:bg-SecondaryColor-0 before:-z-10 before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-white border border-transparent font-medium font-Inter transition-all duration-500 hover:text-white text-TextColor-0 hover:border-white outline-0 h-[60px] rounded py-3 flex items-center justify-center gap-2 relative z-10 overflow-hidden before:absolute before:top-0 before:right-0 before:w-0 before:h-full before:bg-SecondaryColor-0 before:-z-10 before:transition-all before:duration-500 hover:before:w-full hover:before:left-0 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? "Submitting..." : "Send Message"} <FaArrowRightLong />
                 </button>
