@@ -93,7 +93,7 @@ const Header = () => {
         href="/our-services"
       >
         <span className="flex items-center">
-          Service
+        Services
           <BiChevronDown className="ml-1" />
         </span>
         <div className="absolute pt-5 lg:pt-8 z-20">
@@ -149,7 +149,7 @@ const Header = () => {
         } text-HeadingColor-0 hover:text-PrimaryColor-0 text-left lg:border-b-0 px-3 lg:px-1 2xl:px-3 py-2 w-full block transition-all duration-300 whitespace-nowrap`}
         href="/book-appointment"
       >
-        Book Appointment
+        Book
       </Link>
       
       <Link

@@ -6,7 +6,7 @@ import CompareImage from '../../components/CompareImage';
 import wedgetIcon from "@/public/images/widget-icon.png";
 import projectDetailsIcon from "@/public/images/sidber-icon.png";
 import projectDetailsIcon2 from "@/public/images/sidber-icon2.png";
-import { FaArrowRight, FaArrowRightLong, FaRegFolderOpen } from "react-icons/fa6";
+import { FaArrowRight, FaArrowRightLong } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { HiDownload } from "react-icons/hi";
 import { BsFileEarmarkPdf } from "react-icons/bs";
@@ -75,9 +75,6 @@ const ServiceDetails = ({ service }) => {
                   : "text-HeadingColor-0 bg-white"
               }`}>
                 <span className="flex items-center gap-3">
-                  <FaRegFolderOpen className={`transition-all duration-500 group-hover:text-white ${
-                    s.id === service.id ? "text-white" : "text-SecondaryColor-0"
-                  }`} />
                   {s.title}
                 </span>
                 <FaArrowRightLong className="text-white" />
